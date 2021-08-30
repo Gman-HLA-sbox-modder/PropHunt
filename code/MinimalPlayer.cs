@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace MinimalExample
+namespace PropHunt
 {
 	partial class MinimalPlayer : Player
 	{

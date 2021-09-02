@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PropHunt
 {
-	partial class MinimalPlayer : Player
+	partial class PropHuntPlayer : Player
 	{
 		public override void Respawn()
 		{
@@ -51,14 +51,23 @@ namespace PropHunt
 			//
 			if(IsServer && Input.Pressed(InputButton.Attack1))
 			{
-				var ragdoll = new ModelEntity();
-				ragdoll.SetModel("models/citizen/citizen.vmdl");  
+				var ragdoll = new Prop();
+				ragdoll.SetModel("models/citizen_props/chair04blackleather.vmdl");  
 				ragdoll.Position = EyePos + EyeRot.Forward * 40;
 				ragdoll.Rotation = Rotation.LookAt(Vector3.Random.Normal);
 				ragdoll.SetupPhysicsFromModel(PhysicsMotionType.Dynamic, false);
 				ragdoll.PhysicsGroup.Velocity = EyeRot.Forward * 1000;
 			}
-		}
+
+            if(Input.Pressed(InputButton.Use))
+            {
+                TraceResult tr = Trace.Ray(EyePos, EyePos + EyeRot.Forward * 100).UseHitboxes().Ignore(this).Run();
+                if(tr.Hit && tr.Body.IsValid() && tr.Entity is Prop && tr.Body.BodyType == PhysicsBodyType.Dynamic)
+                {
+                    ((Prop)tr.Entity).OnUse(this);
+                }
+            }
+        }
 
 		public override void OnKilled()
 		{
@@ -66,5 +75,10 @@ namespace PropHunt
 
 			EnableDrawing = false;
 		}
+
+        public void OnUseProp(Sandbox.Prop prop)
+        {
+            this.SetModel(prop.GetModel());
+        }
 	}
 }

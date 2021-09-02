@@ -46,7 +46,7 @@ namespace PropHunt
 		{
 			base.ClientJoined(client);
 
-			var player = new MinimalPlayer();
+			var player = new PropHuntPlayer();
 			client.Pawn = player;
 
 			player.Respawn();

@@ -79,6 +79,10 @@ namespace PropHunt
         public void OnUseProp(Sandbox.Prop prop)
         {
             this.SetModel(prop.GetModel());
+            this.Scale = prop.Scale;
+            this.RenderColor = prop.RenderColor;
+            //Bounding Box does not match prop
+            this.CollisionBounds = prop.CollisionBounds;
         }
 	}
 }

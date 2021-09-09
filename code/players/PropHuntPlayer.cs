@@ -52,7 +52,7 @@ namespace PropHunt
 			if(IsServer && Input.Pressed(InputButton.Attack1))
 			{
 				var ragdoll = new Prop();
-				ragdoll.SetModel("models/citizen_props/chair04blackleather.vmdl");  
+				ragdoll.SetModel("models/citizen_props/crate01.vmdl");  
 				ragdoll.Position = EyePos + EyeRot.Forward * 40;
 				ragdoll.Rotation = Rotation.LookAt(Vector3.Random.Normal);
 				ragdoll.SetupPhysicsFromModel(PhysicsMotionType.Dynamic, false);

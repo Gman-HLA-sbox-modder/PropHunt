@@ -1,0 +1,25 @@
+.Health {
+	position: absolute;
+	left: 50px;
+	bottom: 50px;
+	background-color: #000000;
+	opacity: 0.75;
+	border-radius: 7px;
+}
+
+.HealthText {
+	margin: 5px;
+	color: #F0A000;
+	font-family: Verdana;
+	font-size: 50px;
+}
+
+.HealthTextName {
+	position: relative;
+	top: 38px;
+	margin: 5px;
+	color: #F0A000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: bold;
+}

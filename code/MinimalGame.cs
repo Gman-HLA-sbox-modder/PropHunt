@@ -20,6 +20,8 @@ namespace PropHunt
 	/// </summary>
 	public partial class PropHuntGame : Sandbox.Game
 	{
+        public MainHud MainHud;
+
 		public PropHuntGame()
 		{
 			if(IsServer)
@@ -36,8 +38,19 @@ namespace PropHunt
 			if(IsClient)
 			{
 				Log.Info("My Gamemode Has Created Clientside!");
+                MainHud = new MainHud();
 			}
 		}
+
+        [Event.Hotload]
+        public void HotloadUpdate()
+        {
+            if(!IsClient)
+                return;
+
+            MainHud?.Delete();
+            MainHud = new MainHud();
+        }
 
 		/// <summary>
 		/// A client has joined the server. Make them a pawn to play with

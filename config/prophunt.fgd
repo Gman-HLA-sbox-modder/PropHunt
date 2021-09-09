@@ -10,7 +10,8 @@
 	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" = [
+	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
+	[
 		-1 : "UNUSED"
 		0 : "COLLISION GROUP ALWAYS"
 		1 : "COLLISION GROUP NONPHYSICAL"

@@ -37,6 +37,7 @@ namespace PropHunt
 
             if(thirdperson_collision)
             {
+                Pos += Vector3.Up * 10f;
                 var tr = Trace.Ray(Pos, targetPos)
                     .Ignore(pawn)
                     .Radius(8)

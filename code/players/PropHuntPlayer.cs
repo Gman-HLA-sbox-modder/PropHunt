@@ -6,6 +6,8 @@ namespace PropHunt
 {
 	partial class PropHuntPlayer : Player
 	{
+        public bool LockRotatation { get; private set; }
+
 		public override void Respawn()
 		{
 			SetModel("models/citizen/citizen.vmdl");
@@ -69,6 +71,11 @@ namespace PropHunt
                     ((Prop)tr.Entity).OnUse(this);
                 }
             }
+
+            if(Input.Pressed(InputButton.Attack2))
+            {
+                this.LockRotatation = !this.LockRotatation;
+            }
         }
 
 		public override void OnKilled()
@@ -80,6 +87,7 @@ namespace PropHunt
 
         public void OnUseProp(Sandbox.Prop prop)
         {
+            Animator = new PropHuntAnimator();
             this.SetModel(prop.GetModel());
             this.Scale = prop.Scale;
             this.RenderColor = prop.RenderColor;

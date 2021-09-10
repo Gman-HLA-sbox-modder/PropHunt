@@ -7,7 +7,15 @@ namespace PropHunt
     {
         public MainHud()
         {
+            //Default
+            AddChild<ChatBox>();
+            AddChild<KillFeed>();
+            AddChild<Scoreboard<ScoreboardEntry>>();
+            AddChild<VoiceList>();
+
+            //Custom
             AddChild<Health>();
+            AddChild<Crosshair>();
         }
     }
 }

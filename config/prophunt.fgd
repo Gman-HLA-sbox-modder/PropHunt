@@ -1,5 +1,5 @@
 // 
-// PropHunt.Prop : Sandbox.Prop 
+// PropHunt.Prop
 // 
 @PointClass model() = prop_physics : ""
 [

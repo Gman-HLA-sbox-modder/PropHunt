@@ -8,6 +8,8 @@ namespace PropHunt
 	{
         public bool LockRotatation { get; private set; }
 
+        private float MaxHealth = 100f;
+
 		public override void Respawn()
 		{
 			SetModel("models/citizen/citizen.vmdl");
@@ -66,15 +68,15 @@ namespace PropHunt
                 Vector3 startPos = Position;
                 startPos += Vector3.Up * (CollisionBounds.Maxs.z * Scale) * 0.75f;
                 TraceResult tr = Trace.Ray(startPos, startPos + EyeRot.Forward * 100).UseHitboxes().Ignore(this).Run();
-                if(tr.Hit && tr.Body.IsValid() && tr.Entity is Prop && tr.Body.BodyType == PhysicsBodyType.Dynamic)
+                if(tr.Hit && tr.Body.IsValid() && tr.Entity is Prop prop && tr.Body.BodyType == PhysicsBodyType.Dynamic)
                 {
-                    ((Prop)tr.Entity).OnUse(this);
+                    prop.OnUse(this);
                 }
             }
 
             if(Input.Pressed(InputButton.Attack2))
             {
-                this.LockRotatation = !this.LockRotatation;
+                LockRotatation = !LockRotatation;
             }
         }
 
@@ -87,12 +89,21 @@ namespace PropHunt
 
         public void OnUseProp(Sandbox.Prop prop)
         {
+            if(GetModel() == prop.GetModel())
+                return;
+            
             Animator = new PropHuntAnimator();
-            this.SetModel(prop.GetModel());
-            this.Scale = prop.Scale;
-            this.RenderColor = prop.RenderColor;
+            SetModel(prop.GetModel());
+            Scale = prop.Scale;
+            RenderColor = prop.RenderColor;
             //Bounding Box does not match prop
-            this.CollisionBounds = prop.CollisionBounds;
+            CollisionBounds = prop.CollisionBounds;
+
+            float multiplier = Health / MaxHealth;
+            float health = (float)Math.Pow(prop.CollisionBounds.Volume, 0.5f) * 0.5f;
+            health = (float)Math.Round(health / 5) * 5;
+            MaxHealth = health;
+            Health = health * multiplier;
         }
 	}
 }

@@ -91,15 +91,16 @@ namespace PropHunt
         {
             if(GetModel() == prop.GetModel())
                 return;
-            
-            Animator = new PropHuntAnimator();
+
             SetModel(prop.GetModel());
             Scale = prop.Scale;
             RenderColor = prop.RenderColor;
-            //Bounding Box does not match prop
-            CollisionBounds = prop.CollisionBounds;
 
-            float multiplier = Health / MaxHealth;
+            Animator = new PropHuntAnimator();
+            Controller = new PropHuntController();
+            this.EnableAllCollisions = false;
+
+            float multiplier = Math.Clamp(Health / MaxHealth, 0, 1);
             float health = (float)Math.Pow(prop.CollisionBounds.Volume, 0.5f) * 0.5f;
             health = (float)Math.Round(health / 5) * 5;
             MaxHealth = health;

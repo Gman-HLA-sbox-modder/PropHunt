@@ -15,7 +15,8 @@ namespace PropHunt
 
             //Custom
             AddChild<Health>();
-            AddChild<Crosshair>();
+
+            CrosshairCanvas.SetCrosshair(new Crosshair());
         }
     }
 }

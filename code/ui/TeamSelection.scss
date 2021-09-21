@@ -1,0 +1,27 @@
+TeamSelection {
+	left: 20%;
+	top: 20%;
+	width: 60%;
+	height: 60%;
+	justify-content: space-between;
+
+	.Selection {
+		width: 45%;
+		background-color: rgba(0, 0, 0, 0.75);
+		border-radius: 7px;
+		text-align: center;
+		cursor: pointer;
+		pointer-events: all;
+
+		.TeamText {
+			width: 100%;
+			color: #F0A000;
+			font-family: Verdana;
+			font-size: 50px;
+		}
+	}
+}
+
+.Hidden {
+	display: none;
+}

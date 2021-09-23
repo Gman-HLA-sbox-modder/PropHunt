@@ -7,10 +7,14 @@ namespace PropHunt
 	partial class PropHuntPlayer : Player
 	{
         public bool LockRotatation { get; private set; }
+        public bool HideTeamSelection { get; set; }
+
+        [Net]
+        public int TeamIndex { get; private set; }
 
         private float MaxHealth = 100f;
 
-		public override void Respawn()
+        public override void Respawn()
 		{
 			SetModel("models/citizen/citizen.vmdl");
 
@@ -105,6 +109,11 @@ namespace PropHunt
             health = (float)Math.Round(health / 5) * 5;
             MaxHealth = health;
             Health = health * multiplier;
+        }
+
+        public void SetTeam(int team)
+        {
+            TeamIndex = team;
         }
 	}
 }

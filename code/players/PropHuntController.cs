@@ -20,8 +20,6 @@ namespace PropHunt
             mins.x = maxs.x * -1;
             mins.y = maxs.y * -1;
 
-            Log.Info(mins + " " + maxs);
-
             SetBBox(mins, maxs);
         }
     }

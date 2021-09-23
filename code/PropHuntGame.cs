@@ -2,6 +2,7 @@
 using Sandbox;
 using Sandbox.UI.Construct;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -22,6 +23,11 @@ namespace PropHunt
 	{
         public MainHud MainHud;
 
+        public static SeekerTeam SeekerTeam { get; private set; }
+        public static PropTeam PropTeam { get; private set; }
+
+        private static List<BaseTeam> teams;
+
 		public PropHuntGame()
 		{
 			if(IsServer)
@@ -34,7 +40,29 @@ namespace PropHunt
 				Log.Info("My Gamemode Has Created Clientside!");
                 MainHud = new MainHud();
 			}
-		}
+
+            teams = new List<BaseTeam>();
+
+            SeekerTeam = new SeekerTeam();
+            PropTeam = new PropTeam();
+
+            AddTeam(SeekerTeam);
+            AddTeam(PropTeam);
+        }
+
+        public void AddTeam(BaseTeam team)
+        {
+            teams.Add(team);
+            team.Index = teams.Count;
+        }
+
+        public static BaseTeam GetTeam(int index)
+        {
+            if(index <= 0 || index > teams.Count)
+                return null;
+
+            return teams[index - 1];
+        }
 
         [Event.Hotload]
         public void HotloadUpdate()
@@ -58,6 +86,26 @@ namespace PropHunt
 
 			player.Respawn();
 		}
-	}
 
+        [ServerCmd("ph_jointeam")]
+        public static void JoinTeam(string team)
+        {
+            if(ConsoleSystem.Caller.Pawn is not PropHuntPlayer player)
+                return;
+
+            team = team.ToLower();
+            team = team.Trim();
+
+            if(team == "seeker")
+            {
+                player.SetTeam(SeekerTeam.Index);
+                Log.Info("Joined team " + SeekerTeam.HudName);
+            }
+            else if(team == "props")
+            {
+                player.SetTeam(PropTeam.Index);
+                Log.Info("Joined team " + PropTeam.HudName);
+            }
+        }
+	}
 }

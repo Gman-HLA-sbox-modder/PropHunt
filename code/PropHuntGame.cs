@@ -98,11 +98,17 @@ namespace PropHunt
 
             if(team == "seeker")
             {
+                if(player.TeamIndex == SeekerTeam.Index)
+                    return;
+
                 player.SetTeam(SeekerTeam.Index);
                 Log.Info("Joined team " + SeekerTeam.HudName);
             }
             else if(team == "props")
             {
+                if(player.TeamIndex == PropTeam.Index)
+                    return;
+
                 player.SetTeam(PropTeam.Index);
                 Log.Info("Joined team " + PropTeam.HudName);
             }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace PropHunt
 {
-	partial class PropHuntPlayer : Player
+	public partial class PropHuntPlayer : Player
 	{
         public bool LockRotatation { get; private set; }
         public bool HideTeamSelection { get; set; }
@@ -116,7 +116,12 @@ namespace PropHunt
 
         public void SetTeam(int team)
         {
+            if(TeamIndex == team)
+                return;
+
+            PropHuntGame.GetTeam(TeamIndex)?.Leave(this);
             TeamIndex = team;
+            PropHuntGame.GetTeam(TeamIndex)?.Join(this);
         }
 	}
 }

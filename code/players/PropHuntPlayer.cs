@@ -67,20 +67,23 @@ namespace PropHunt
 				ragdoll.PhysicsGroup.Velocity = EyeRot.Forward * 1000;
 			}
 
-            if(Input.Pressed(InputButton.Use))
+            if(PropHuntGame.GetTeam(TeamIndex) is PropTeam)
             {
-                Vector3 startPos = Position;
-                startPos += Vector3.Up * (CollisionBounds.Maxs.z * Scale) * 0.75f;
-                TraceResult tr = Trace.Ray(startPos, startPos + EyeRot.Forward * 100).UseHitboxes().Ignore(this).Run();
-                if(tr.Hit && tr.Body.IsValid() && tr.Entity is Prop prop && tr.Body.BodyType == PhysicsBodyType.Dynamic)
+                if(Input.Pressed(InputButton.Use))
                 {
-                    prop.OnUse(this);
+                    Vector3 startPos = Position;
+                    startPos += Vector3.Up * (CollisionBounds.Maxs.z * Scale) * 0.75f;
+                    TraceResult tr = Trace.Ray(startPos, startPos + EyeRot.Forward * 100).UseHitboxes().Ignore(this).Run();
+                    if(tr.Hit && tr.Body.IsValid() && tr.Entity is Prop prop && tr.Body.BodyType == PhysicsBodyType.Dynamic)
+                    {
+                        prop.OnUse(this);
+                    }
                 }
-            }
 
-            if(Input.Pressed(InputButton.Attack2))
-            {
-                LockRotatation = !LockRotatation;
+                if(Input.Pressed(InputButton.Attack2))
+                {
+                    LockRotatation = !LockRotatation;
+                }
             }
         }
 

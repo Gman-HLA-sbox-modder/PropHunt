@@ -76,7 +76,7 @@ namespace PropHunt
                     TraceResult tr = Trace.Ray(startPos, startPos + EyeRot.Forward * 100).UseHitboxes().Ignore(this).Run();
                     if(tr.Hit && tr.Body.IsValid() && tr.Entity is Prop prop && tr.Body.BodyType == PhysicsBodyType.Dynamic)
                     {
-                        prop.OnUse(this);
+                        UseProp(prop);
                     }
                 }
 
@@ -94,7 +94,17 @@ namespace PropHunt
 			EnableDrawing = false;
 		}
 
-        public void OnUseProp(Sandbox.Prop prop)
+        public void SetTeam(int team)
+        {
+            if(TeamIndex == team)
+                return;
+
+            PropHuntGame.GetTeam(TeamIndex)?.Leave(this);
+            TeamIndex = team;
+            PropHuntGame.GetTeam(TeamIndex)?.Join(this);
+        }
+
+        private void UseProp(Prop prop)
         {
             if(GetModel() == prop.GetModel())
                 return;
@@ -113,15 +123,5 @@ namespace PropHunt
             MaxHealth = health;
             Health = health * multiplier;
         }
-
-        public void SetTeam(int team)
-        {
-            if(TeamIndex == team)
-                return;
-
-            PropHuntGame.GetTeam(TeamIndex)?.Leave(this);
-            TeamIndex = team;
-            PropHuntGame.GetTeam(TeamIndex)?.Join(this);
-        }
-	}
+    }
 }

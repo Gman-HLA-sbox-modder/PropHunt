@@ -28,12 +28,12 @@ namespace PropHunt
 			//
 			Animator = new StandardPlayerAnimator();
 
-			//
-			// Use ThirdPersonCamera (you can make your own Camera for 100% control)
-			//
-			Camera = new PropCamera();
+            if(PropHuntGame.GetTeam(TeamIndex) is SeekerTeam)
+                Camera = new FirstPersonCamera();
+            else
+                Camera = new PropCamera();
 
-			EnableAllCollisions = true;
+            EnableAllCollisions = true;
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;

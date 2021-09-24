@@ -14,9 +14,15 @@ namespace PropHunt
 
         private float MaxHealth = 100f;
 
+        public PropHuntPlayer()
+        {
+            Inventory = new BaseInventory(this);
+        }
+
         public override void Respawn()
 		{
-			SetModel("models/citizen/citizen.vmdl");
+            Inventory.DeleteContents();
+            SetModel("models/citizen/citizen.vmdl");
 
 			//
 			// Use WalkController for movement (you can make your own PlayerController for 100% control)
@@ -29,7 +35,10 @@ namespace PropHunt
 			Animator = new StandardPlayerAnimator();
 
             if(PropHuntGame.GetTeam(TeamIndex) is SeekerTeam)
+            {
                 Camera = new FirstPersonCamera();
+                GiveWeapons();
+            }
             else
                 Camera = new PropCamera();
 
@@ -39,7 +48,7 @@ namespace PropHunt
 			EnableShadowInFirstPerson = true;
 
 			base.Respawn();
-		}
+        }
 
 		/// <summary>
 		/// Called every tick, clientside and serverside.
@@ -72,6 +81,26 @@ namespace PropHunt
                     LockRotatation = !LockRotatation;
                 }
             }
+
+            if(Inventory.Count() > 1)
+            {
+                //if(Input.Pressed(InputButton.Attack2))
+                if(Input.MouseWheel != 0)
+                {
+                    int slot = Inventory.GetActiveSlot();
+                    if(Input.MouseWheel > 0)
+                        slot++;
+                    else
+                        slot--;
+
+                    if(slot >= Inventory.Count())
+                        slot = 0;
+                    else if(slot < 0)
+                        slot = Inventory.Count() - 1;
+
+                    Inventory.SetActiveSlot(slot, false);
+                }
+            }
         }
 
 		public override void OnKilled()
@@ -79,6 +108,7 @@ namespace PropHunt
 			base.OnKilled();
 
 			EnableDrawing = false;
+            Inventory.DeleteContents();
 		}
 
         public void SetTeam(int team)
@@ -109,6 +139,12 @@ namespace PropHunt
             health = (float)Math.Round(health / 5) * 5;
             MaxHealth = health;
             Health = health * multiplier;
+        }
+
+        private void GiveWeapons()
+        {
+            Inventory.Add(new Shotgun(), true);
+            Inventory.Add(new SMG(), true);
         }
     }
 }

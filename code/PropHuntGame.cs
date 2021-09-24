@@ -12,14 +12,15 @@ using System.Threading.Tasks;
 namespace PropHunt
 {
 
-	/// <summary>
-	/// This is your game class. This is an entity that is created serverside when
-	/// the game starts, and is replicated to the client. 
-	/// 
-	/// You can use this to create things like HUDs and declare which player class
-	/// to use for spawned players.
-	/// </summary>
-	public partial class PropHuntGame : Sandbox.Game
+    /// <summary>
+    /// This is your game class. This is an entity that is created serverside when
+    /// the game starts, and is replicated to the client. 
+    /// 
+    /// You can use this to create things like HUDs and declare which player class
+    /// to use for spawned players.
+    /// </summary>
+    [Library("prophunt", Title = "Prop Hunt")]
+    public partial class PropHuntGame : Sandbox.Game
 	{
         public MainHud MainHud;
 

@@ -12,7 +12,7 @@ namespace PropHunt
             Vector3 mins = pawn.CollisionBounds.Mins;
             Vector3 maxs = pawn.CollisionBounds.Maxs;
 
-            float smallest = Math.Min(maxs.x, maxs.y);
+            float smallest = Math.Max(Math.Min(maxs.x, maxs.y), 2f);
 
             maxs.x = smallest;
             maxs.y = smallest;

@@ -103,7 +103,18 @@ namespace PropHunt
             }
         }
 
-		public override void OnKilled()
+        public override void TakeDamage(DamageInfo info)
+        {
+            if(info.Attacker is PropHuntPlayer attacker && attacker != this)
+            {
+                if(attacker.TeamIndex == TeamIndex)
+                    return;
+            }
+
+            base.TakeDamage(info);
+        }
+
+        public override void OnKilled()
 		{
 			base.OnKilled();
 
@@ -132,7 +143,7 @@ namespace PropHunt
 
             Animator = new PropHuntAnimator();
             Controller = new PropHuntController();
-            this.EnableAllCollisions = false;
+            PhysicsEnabled = false;
 
             float multiplier = Math.Clamp(Health / MaxHealth, 0, 1);
             float health = (float)Math.Pow(prop.CollisionBounds.Volume, 0.5f) * 0.5f;

@@ -1,16 +1,15 @@
 ﻿using Sandbox;
+using System;
 
 namespace PropHunt
 {
     public class PropCamera : ThirdPersonCamera
     {
-        private Angles orbitAngles;
         private float orbitDistance = 150;
 
         public override void Update()
         {
-            var pawn = Local.Pawn as AnimEntity;
-            var client = Local.Client;
+            AnimEntity pawn = Local.Pawn as AnimEntity;
 
             if(pawn == null)
                 return;
@@ -18,40 +17,16 @@ namespace PropHunt
             Pos = pawn.Position;
             Vector3 targetPos;
 
-            var center = pawn.Position + Vector3.Up * 64;
+            Pos += Vector3.Up * Math.Max(pawn.CollisionBounds.Maxs.z * pawn.Scale * 0.75f, 8f);
+            Rot = Rotation.FromAxis(Vector3.Up, 4) * Input.Rotation;
 
-            if(thirdperson_orbit)
-            {
-                Pos += Vector3.Up * (pawn.CollisionBounds.Center.z * pawn.Scale);
-                Rot = Rotation.From(orbitAngles);
+            targetPos = Pos + Rot.Backward * orbitDistance;
 
-                targetPos = Pos + Rot.Backward * orbitDistance;
-            }
-            else
-            {
-                Pos += Vector3.Up * (pawn.CollisionBounds.Maxs.z * pawn.Scale) * 0.75f;
-                Rot = Rotation.FromAxis(Vector3.Up, 4) * Input.Rotation;
-
-                targetPos = Pos + Rot.Backward * orbitDistance;
-            }
-
-            if(thirdperson_collision)
-            {
-                Pos += Vector3.Up * 10f;
-                var tr = Trace.Ray(Pos, targetPos)
-                    .Ignore(pawn)
-                    .Radius(8)
-                    .Run();
-
-                Pos = tr.EndPos;
-            }
-            else
-            {
-                Pos = targetPos;
-            }
+            Pos += Vector3.Up * 0f;
+            TraceResult tr = Trace.Ray(Pos, targetPos).Ignore(pawn).Radius(8).Run();
+            Pos = tr.EndPos;
 
             FieldOfView = 70;
-
             Viewer = null;
         }
     }

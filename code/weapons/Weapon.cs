@@ -5,6 +5,8 @@ namespace PropHunt
     public partial class Weapon : BaseWeapon, IUse
     {
         public virtual float ReloadTime => 3.0f;
+        public virtual int ClipSize => 0;
+        public virtual int MaxReserve => 0;
 
         public PickupTrigger PickupTrigger { get; protected set; }
 
@@ -16,6 +18,12 @@ namespace PropHunt
 
         [Net, Predicted]
         public TimeSince TimeSinceDeployed { get; set; }
+
+        [Net, Predicted]
+        public int AmmoClip { get; set; }
+
+        [Net, Predicted]
+        public int AmmoReserve { get; set; }
 
         public override void Spawn()
         {
@@ -30,6 +38,9 @@ namespace PropHunt
             };
 
             PickupTrigger.PhysicsBody.EnableAutoSleeping = false;
+
+            AmmoClip = ClipSize;
+            AmmoReserve = MaxReserve;
         }
 
         public override void ActiveStart(Entity ent)
@@ -42,6 +53,12 @@ namespace PropHunt
         public override void Reload()
         {
             if(IsReloading)
+                return;
+
+            if(AmmoReserve <= 0)
+                return;
+
+            if(AmmoClip >= ClipSize)
                 return;
 
             TimeSinceReload = 0;
@@ -71,6 +88,25 @@ namespace PropHunt
         public virtual void OnReloadFinish()
         {
             IsReloading = false;
+
+            if(AmmoReserve == 0)
+                return;
+
+            if(AmmoReserve < ClipSize)
+            {
+                AmmoClip = AmmoReserve;
+                AmmoReserve = 0;
+            }
+            else if(ClipSize > 0)
+            {
+                AmmoReserve -= ClipSize - AmmoClip;
+                AmmoClip = ClipSize;
+            }
+            else
+            {
+                AmmoClip = ClipSize;
+                AmmoReserve -= ClipSize;
+            }
         }
 
         [ClientRpc]
@@ -200,6 +236,15 @@ namespace PropHunt
             {
                 ShootBullet(pos, dir, spread, force / numBullets, damage, bulletSize);
             }
+        }
+
+        public bool UseAmmo(int amount)
+        {
+            if(AmmoClip < amount)
+                return false;
+
+            AmmoClip -= amount;
+            return true;
         }
     }
 }

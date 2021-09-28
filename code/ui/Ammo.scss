@@ -1,0 +1,29 @@
+Ammo {
+	position: absolute;
+	right: 50px;
+	bottom: 50px;
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 7px;
+
+	.Counter {
+		margin: 5px;
+		color: #F0A000;
+		font-family: Verdana;
+		font-size: 50px;
+	}
+
+	.Reserve {
+		position: relative;
+		top: 38px;
+		margin: 5px;
+		color: #F0A000;
+		font-family: Verdana;
+		font-size: 12px;
+		font-weight: bold;
+	}
+}
+
+.Hidden {
+	display: none;
+}
+

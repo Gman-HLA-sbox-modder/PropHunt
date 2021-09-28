@@ -14,6 +14,7 @@ namespace PropHunt
             AddChild<VoiceList>();
 
             //Custom
+            AddChild<Ammo>();
             AddChild<Health>();
             AddChild<Team>();
 

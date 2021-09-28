@@ -10,6 +10,8 @@ namespace PropHunt
         public override float PrimaryRate => 15.0f;
         public override float SecondaryRate => 1.0f;
         public override float ReloadTime => 5.0f;
+        public override int ClipSize => 45;
+        public override int MaxReserve => 225;
 
         public override void Spawn()
         {
@@ -20,6 +22,18 @@ namespace PropHunt
 
         public override void AttackPrimary()
         {
+            if(!UseAmmo(1))
+            {
+                if(AmmoReserve > 0)
+                {
+                    Reload();
+                    return;
+                }
+
+                PlaySound("rust_smg.dryfire");
+                return;
+            }
+
             TimeSincePrimaryAttack = 0;
             TimeSinceSecondaryAttack = 0;
 

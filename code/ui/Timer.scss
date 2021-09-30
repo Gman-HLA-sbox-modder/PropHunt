@@ -1,0 +1,36 @@
+Timer {
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 7px;
+	width: 200px;
+	transform: translateX(-50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.Title {
+		position: relative;
+		display: inline-block;
+		margin: 5px;
+		color: #F0A000;
+		font-family: Verdana;
+		font-size: 20px;
+		flex-grow: 1;
+	}
+
+	.Text {
+		position: center;
+		display: inline-block;
+		margin: 5px;
+		color: #F0A000;
+		font-family: Verdana;
+		font-size: 20px;
+		flex-grow: 1;
+	}
+}
+
+	.Hidden {
+		display: none;
+	}

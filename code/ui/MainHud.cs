@@ -17,6 +17,7 @@ namespace PropHunt
             AddChild<Ammo>();
             AddChild<Health>();
             AddChild<Team>();
+            AddChild<Timer>();
 
             //Disabled because the clicking breaks on Hotload
             //AddChild<TeamSelection>();

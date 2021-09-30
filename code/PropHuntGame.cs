@@ -27,7 +27,13 @@ namespace PropHunt
         public static SeekerTeam SeekerTeam { get; private set; }
         public static PropTeam PropTeam { get; private set; }
 
+        [Net]
+        public static BaseRound Round { get; private set; }
+
         private static List<BaseTeam> teams;
+
+        [ServerVar("ph_min_players", Help = "The minimum players required to start.")]
+        public static int MinPlayers { get; set; } = 2;
 
 		public PropHuntGame()
 		{
@@ -65,6 +71,14 @@ namespace PropHunt
             return teams[index - 1];
         }
 
+        public static void ChangeRound(BaseRound round)
+        {
+            Round?.Finish();
+            Round = round;
+            Round.Start();
+            UpdateRound(round.RoundName);
+        }
+
         [Event.Hotload]
         public void HotloadUpdate()
         {
@@ -73,6 +87,22 @@ namespace PropHunt
 
             MainHud?.Delete();
             MainHud = new MainHud();
+        }
+
+        [ClientRpc]
+        public static void UpdateRound(string roundName)
+        {
+            BaseRound round;
+            if(roundName == "Hiding")
+                round = new HidingRound();
+            else if(roundName == "Seeking")
+                round = new SeekingRound();
+            else if(roundName == "Finished")
+                round = new FinishedRound();
+            else
+                round = new WaitingRound();
+
+            Round = round;
         }
 
 		/// <summary>
@@ -87,6 +117,37 @@ namespace PropHunt
 
 			player.Respawn();
 		}
+
+        public override void OnKilled(Entity pawn)
+        {
+            if(pawn is PropHuntPlayer player)
+                Round?.OnPlayerKilled(player);
+
+            base.OnKilled(pawn);
+        }
+
+        public override void ClientDisconnect(Client client, NetworkDisconnectionReason reason)
+        {
+            Round?.OnPlayerLeave(client.Pawn as PropHuntPlayer);
+
+            base.ClientDisconnect(client, reason);
+        }
+
+        public override void Simulate(Client cl)
+        {
+            base.Simulate(cl);
+
+            if(IsServer)
+            {
+                if(Client.All.Count >= MinPlayers)
+                {
+                    if(Round is WaitingRound || Round == null)
+                        ChangeRound(new HidingRound());
+                }
+                else if(Round is not WaitingRound)
+                    ChangeRound(new WaitingRound());
+            }
+        }
 
         [ServerCmd("ph_jointeam")]
         public static void JoinTeam(string team)
@@ -114,5 +175,34 @@ namespace PropHunt
                 Log.Info("Joined team " + PropTeam.HudName);
             }
         }
-	}
+
+        [ServerCmd("ph_round")]
+        public static void SetRound(string round)
+        {
+            int index = int.Parse(round);
+            switch(index)
+            {
+                case 1:
+                {
+                    ChangeRound(new HidingRound());
+                    break;
+                }
+                case 2:
+                {
+                    ChangeRound(new SeekingRound());
+                    break;
+                }
+                case 3:
+                {
+                    ChangeRound(new FinishedRound());
+                    break;
+                }
+                default:
+                {
+                    ChangeRound(new WaitingRound());
+                    break;
+                }
+            }
+        }
+    }
 }

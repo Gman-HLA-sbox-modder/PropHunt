@@ -11,5 +11,10 @@ namespace PropHunt
         {
             Log.Info(RoundName + " Round has started.");
         }
+
+        public override void OnTimerEnd()
+        {
+            PropHuntGame.ChangeRound(new WaitingRound());
+        }
     }
 }

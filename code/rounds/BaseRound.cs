@@ -9,6 +9,8 @@ namespace PropHunt
 
         public void Start()
         {
+            if(RoundDuration > 0)
+                PropHuntGame.SetTimerEnd(Time.Now + RoundDuration);
             OnStart();
         }
 
@@ -30,6 +32,10 @@ namespace PropHunt
         }
 
         public virtual void OnPlayerLeave(PropHuntPlayer player)
+        {
+        }
+
+        public virtual void OnTimerEnd()
         {
         }
     }

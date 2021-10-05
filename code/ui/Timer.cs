@@ -1,6 +1,7 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using System;
 
 namespace PropHunt
 {
@@ -21,8 +22,15 @@ namespace PropHunt
         public override void Tick()
         {
             base.Tick();
-            TitleText.Text = PropHuntGame.Round?.RoundName;
-            TimerText.Text = "0:00";
+            if(PropHuntGame.Round == null)
+                return;
+
+            TitleText.Text = PropHuntGame.Round.RoundName;
+
+            float timeLeft = PropHuntGame.TimerEnd - Time.Now;
+            int minutes = Math.Max((timeLeft / 60).FloorToInt(), 0);
+            int seconds = Math.Max((timeLeft % 60).FloorToInt(), 0);
+            TimerText.Text = minutes.ToString() + ":" + (seconds < 10? "0" : "") + seconds.ToString();
         }
     }
 }

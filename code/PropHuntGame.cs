@@ -27,8 +27,16 @@ namespace PropHunt
         public static SeekerTeam SeekerTeam { get; private set; }
         public static PropTeam PropTeam { get; private set; }
 
+        public static WaitingRound WaitingRound { get; private set; }
+        public static HidingRound HidingRound { get; private set; }
+        public static SeekingRound SeekingRound { get; private set; }
+        public static FinishedRound FinishedRound { get; private set; }
+
         [Net]
         public static BaseRound Round { get; private set; }
+
+        [Net]
+        public static float TimerEnd { get; private set; }
 
         private static List<BaseTeam> teams;
 
@@ -52,6 +60,11 @@ namespace PropHunt
 
             SeekerTeam = new SeekerTeam();
             PropTeam = new PropTeam();
+
+            WaitingRound = new WaitingRound();
+            HidingRound = new HidingRound();
+            SeekingRound = new SeekingRound();
+            FinishedRound = new FinishedRound();
 
             AddTeam(SeekerTeam);
             AddTeam(PropTeam);
@@ -79,6 +92,12 @@ namespace PropHunt
             UpdateRound(round.RoundName);
         }
 
+        public static void SetTimerEnd(float time)
+        {
+            TimerEnd = time;
+            UpdateTimerEnd(time);
+        }
+
         [Event.Hotload]
         public void HotloadUpdate()
         {
@@ -94,21 +113,27 @@ namespace PropHunt
         {
             BaseRound round;
             if(roundName == "Hiding")
-                round = new HidingRound();
+                round = HidingRound;
             else if(roundName == "Seeking")
-                round = new SeekingRound();
+                round = SeekingRound;
             else if(roundName == "Finished")
-                round = new FinishedRound();
+                round = FinishedRound;
             else
-                round = new WaitingRound();
+                round = WaitingRound;
 
             Round = round;
         }
 
-		/// <summary>
-		/// A client has joined the server. Make them a pawn to play with
-		/// </summary>
-		public override void ClientJoined(Client client)
+        [ClientRpc]
+        public static void UpdateTimerEnd(float time)
+        {
+            TimerEnd = time;
+        }
+
+        /// <summary>
+        /// A client has joined the server. Make them a pawn to play with
+        /// </summary>
+        public override void ClientJoined(Client client)
 		{
 			base.ClientJoined(client);
 
@@ -142,10 +167,16 @@ namespace PropHunt
                 if(Client.All.Count >= MinPlayers)
                 {
                     if(Round is WaitingRound || Round == null)
-                        ChangeRound(new HidingRound());
+                        ChangeRound(HidingRound);
                 }
-                else if(Round is not WaitingRound)
-                    ChangeRound(new WaitingRound());
+                else if(!(Round is WaitingRound))
+                    ChangeRound(WaitingRound);
+
+                if(TimerEnd > 0 && Time.Now >= TimerEnd)
+                {
+                    TimerEnd = 0f;
+                    Round?.OnTimerEnd();
+                }
             }
         }
 
@@ -184,22 +215,22 @@ namespace PropHunt
             {
                 case 1:
                 {
-                    ChangeRound(new HidingRound());
+                    ChangeRound(HidingRound);
                     break;
                 }
                 case 2:
                 {
-                    ChangeRound(new SeekingRound());
+                    ChangeRound(SeekingRound);
                     break;
                 }
                 case 3:
                 {
-                    ChangeRound(new FinishedRound());
+                    ChangeRound(FinishedRound);
                     break;
                 }
                 default:
                 {
-                    ChangeRound(new WaitingRound());
+                    ChangeRound(WaitingRound);
                     break;
                 }
             }

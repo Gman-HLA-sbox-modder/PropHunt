@@ -17,10 +17,8 @@ namespace PropHunt
             AddChild<Ammo>();
             AddChild<Health>();
             AddChild<Team>();
+            AddChild<TeamSelection>();
             AddChild<Timer>();
-
-            //Disabled because the clicking breaks on Hotload
-            //AddChild<TeamSelection>();
 
             CrosshairCanvas.SetCrosshair(new Crosshair());
         }

@@ -7,7 +7,7 @@ namespace PropHunt
 	public partial class PropHuntPlayer : Player
 	{
         public bool LockRotatation { get; private set; }
-        public bool HideTeamSelection { get; set; }
+        public bool ShowTeamSelection { get; set; }
 
         [Net]
         public int TeamIndex { get; private set; }
@@ -17,6 +17,7 @@ namespace PropHunt
         public PropHuntPlayer()
         {
             Inventory = new BaseInventory(this);
+            ShowTeamSelection = true;
         }
 
         public override void Respawn()
@@ -82,6 +83,11 @@ namespace PropHunt
                 }
             }
 
+            if(Input.Pressed(InputButton.View))
+            {
+                ShowTeamSelection = !ShowTeamSelection;
+            }
+
             if(Inventory.Count() > 1)
             {
                 //if(Input.Pressed(InputButton.Attack2))
@@ -121,6 +127,11 @@ namespace PropHunt
 			EnableDrawing = false;
             Inventory.DeleteContents();
 		}
+
+        public void ToggleTeamSelection(bool b)
+        {
+            ShowTeamSelection = b;
+        }
 
         public void SetTeam(int team)
         {

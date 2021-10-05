@@ -9,6 +9,13 @@ namespace PropHunt
         public TeamSelection()
         {
             StyleSheet.Load("/ui/TeamSelection.scss");
+            CreateButtons();
+        }
+
+        private void CreateButtons()
+        {
+            DeleteChildren(true);
+
             Panel seeker = Add.Panel("Selection");
             Panel prop = Add.Panel("Selection");
 
@@ -18,15 +25,31 @@ namespace PropHunt
             //Clicking stops working on Hotload
             seeker.AddEventListener("onclick", () =>
             {
-                AddClass("Hidden");
                 PropHuntGame.JoinTeam("seeker");
             });
 
             prop.AddEventListener("onclick", () =>
             {
-                AddClass("Hidden");
                 PropHuntGame.JoinTeam("props");
             });
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+
+            PropHuntPlayer player = Local.Pawn as PropHuntPlayer;
+            if(player == null)
+                return;
+
+            Parent.SetClass("ShowTeamSelection", player.ShowTeamSelection);
+        }
+
+        public override void OnHotloaded()
+        {
+            base.OnHotloaded();
+
+            CreateButtons();
         }
     }
 }

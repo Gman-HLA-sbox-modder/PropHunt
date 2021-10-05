@@ -124,12 +124,6 @@ namespace PropHunt
             Round = round;
         }
 
-        [ClientRpc]
-        public static void UpdateTimerEnd(float time)
-        {
-            TimerEnd = time;
-        }
-
         /// <summary>
         /// A client has joined the server. Make them a pawn to play with
         /// </summary>
@@ -140,7 +134,7 @@ namespace PropHunt
 			var player = new PropHuntPlayer();
 			client.Pawn = player;
 
-			player.Respawn();
+            player.Respawn();
 		}
 
         public override void OnKilled(Entity pawn)
@@ -185,6 +179,8 @@ namespace PropHunt
         {
             if(ConsoleSystem.Caller.Pawn is not PropHuntPlayer player)
                 return;
+
+            ToggleTeamSelection(player, false);
 
             team = team.ToLower();
             team = team.Trim();
@@ -234,6 +230,18 @@ namespace PropHunt
                     break;
                 }
             }
+        }
+
+        [ClientRpc]
+        public static void UpdateTimerEnd(float time)
+        {
+            TimerEnd = time;
+        }
+
+        [ClientRpc]
+        public static void ToggleTeamSelection(PropHuntPlayer player, bool b)
+        {
+            player.ToggleTeamSelection(b);
         }
     }
 }

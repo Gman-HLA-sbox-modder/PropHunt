@@ -2,7 +2,7 @@
 
 namespace PropHunt
 {
-    public class PropHuntAnimator : PawnAnimator
+    public class PropAnimator : PawnAnimator
     {
         public override void Simulate()
         {

@@ -3,8 +3,7 @@ using System;
 
 namespace PropHunt
 {
-    [Library]
-    public class PropHuntController : WalkController
+    public class PropController : WalkController
     {
         public override void UpdateBBox()
         {

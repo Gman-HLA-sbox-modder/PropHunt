@@ -6,5 +6,10 @@
 	border-radius: 10px;
 	width: 4px;
 	height: 4px;
-	transform: translate( -50% -50% );
+	transform: translateX(-50%) translateY(-50%);
+	opacity: 1;
+}
+
+.Hidden {
+	opacity: 0;
 }

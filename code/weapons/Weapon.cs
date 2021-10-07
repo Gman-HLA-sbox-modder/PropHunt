@@ -71,6 +71,9 @@ namespace PropHunt
 
         public override void Simulate(Client owner)
         {
+            if(PropHuntGame.Round == PropHuntGame.HidingRound)
+                return;
+
             if(TimeSinceDeployed < 0.6f)
                 return;
 

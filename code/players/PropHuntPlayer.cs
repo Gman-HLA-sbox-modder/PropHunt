@@ -33,19 +33,23 @@ namespace PropHunt
             SetModel("models/citizen/citizen.vmdl");
             Clothing.DressEntity(this);
 
-			//
-			// Use WalkController for movement (you can make your own PlayerController for 100% control)
-			//
-			Controller = new WalkController();
+            //
+            // Use WalkController for movement (you can make your own PlayerController for 100% control)
+            //
+            if(PropHuntGame.GetTeam(TeamIndex) is SeekerTeam)
+                Controller = new SeekerController();
+            else
+                Controller = new WalkController();
 
-			//
-			// Use StandardPlayerAnimator  (you can make your own PlayerAnimator for 100% control)
-			//
-			Animator = new StandardPlayerAnimator();
+
+            //
+            // Use StandardPlayerAnimator  (you can make your own PlayerAnimator for 100% control)
+            //
+            Animator = new StandardPlayerAnimator();
 
             if(PropHuntGame.GetTeam(TeamIndex) is SeekerTeam)
             {
-                Camera = new FirstPersonCamera();
+                Camera = new SeekerCamera();
                 GiveWeapons();
             }
             else
@@ -159,8 +163,8 @@ namespace PropHunt
             Scale = prop.Scale;
             RenderColor = prop.RenderColor;
 
-            Animator = new PropHuntAnimator();
-            Controller = new PropHuntController();
+            Animator = new PropAnimator();
+            Controller = new PropController();
             PhysicsEnabled = false;
             Clothing.ClearEntities();
 

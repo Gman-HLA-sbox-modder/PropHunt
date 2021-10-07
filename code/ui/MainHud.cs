@@ -15,6 +15,7 @@ namespace PropHunt
 
             //Custom
             AddChild<Ammo>();
+            AddChild<Blind>();
             AddChild<Health>();
             AddChild<Team>();
             AddChild<TeamSelection>();

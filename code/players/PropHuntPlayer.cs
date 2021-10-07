@@ -9,6 +9,8 @@ namespace PropHunt
         public bool LockRotatation { get; private set; }
         public bool ShowTeamSelection { get; set; }
 
+        public Clothing.Container Clothing = new Clothing.Container();
+
         [Net]
         public int TeamIndex { get; private set; }
 
@@ -20,10 +22,16 @@ namespace PropHunt
             ShowTeamSelection = true;
         }
 
+        public PropHuntPlayer(Client cl) : this()
+        {
+            Clothing.LoadFromClient(cl);
+        }
+
         public override void Respawn()
 		{
             Inventory.DeleteContents();
             SetModel("models/citizen/citizen.vmdl");
+            Clothing.DressEntity(this);
 
 			//
 			// Use WalkController for movement (you can make your own PlayerController for 100% control)
@@ -90,7 +98,6 @@ namespace PropHunt
 
             if(Inventory.Count() > 1)
             {
-                //if(Input.Pressed(InputButton.Attack2))
                 if(Input.MouseWheel != 0)
                 {
                     int slot = Inventory.GetActiveSlot();
@@ -155,6 +162,7 @@ namespace PropHunt
             Animator = new PropHuntAnimator();
             Controller = new PropHuntController();
             PhysicsEnabled = false;
+            Clothing.ClearEntities();
 
             float multiplier = Math.Clamp(Health / MaxHealth, 0, 1);
             float health = (float)Math.Pow(prop.CollisionBounds.Volume, 0.5f) * 0.5f;

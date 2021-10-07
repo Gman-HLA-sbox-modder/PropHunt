@@ -131,7 +131,7 @@ namespace PropHunt
 		{
 			base.ClientJoined(client);
 
-			var player = new PropHuntPlayer();
+			var player = new PropHuntPlayer(client);
 			client.Pawn = player;
 
             player.Respawn();

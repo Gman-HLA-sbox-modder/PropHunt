@@ -103,7 +103,7 @@ namespace PropHunt
             int count = 0;
             foreach(Client client in Client.All)
             {
-                PropHuntPlayer player = (PropHuntPlayer)client.Pawn;
+                PropHuntPlayer player = client.Pawn as PropHuntPlayer;
                 if(player.TeamIndex == teamIndex)
                     count++;
             }
@@ -183,7 +183,7 @@ namespace PropHunt
             team = team.ToLower();
             team = team.Trim();
 
-            if(team == "seeker")
+            if(team == "seeker" || team == "seekers")
             {
                 if(player.TeamIndex == SeekerTeam.Index)
                     return;
@@ -191,7 +191,7 @@ namespace PropHunt
                 player.SetTeam(SeekerTeam.Index);
                 Log.Info("Joined team " + SeekerTeam.HudName);
             }
-            else if(team == "props")
+            else if(team == "prop" || team == "props")
             {
                 if(player.TeamIndex == PropTeam.Index)
                     return;

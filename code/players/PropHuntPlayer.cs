@@ -32,6 +32,7 @@ namespace PropHunt
             Inventory.DeleteContents();
             SetModel("models/citizen/citizen.vmdl");
             Clothing.DressEntity(this);
+            RenderColor = new Color(1f);
 
             //
             // Use WalkController for movement (you can make your own PlayerController for 100% control)

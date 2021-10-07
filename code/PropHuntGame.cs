@@ -98,6 +98,18 @@ namespace PropHunt
             UpdateTimerEnd(time);
         }
 
+        public static int GetTeamPlayerCount(int teamIndex)
+        {
+            int count = 0;
+            foreach(Client client in Client.All)
+            {
+                PropHuntPlayer player = (PropHuntPlayer)client.Pawn;
+                if(player.TeamIndex == teamIndex)
+                    count++;
+            }
+            return count;
+        }
+
         [Event.Hotload]
         public void HotloadUpdate()
         {
@@ -106,22 +118,6 @@ namespace PropHunt
 
             MainHud?.Delete();
             MainHud = new MainHud();
-        }
-
-        [ClientRpc]
-        public static void UpdateRound(string roundName)
-        {
-            BaseRound round;
-            if(roundName == "Hiding")
-                round = HidingRound;
-            else if(roundName == "Seeking")
-                round = SeekingRound;
-            else if(roundName == "Finished")
-                round = FinishedRound;
-            else
-                round = WaitingRound;
-
-            Round = round;
         }
 
         /// <summary>
@@ -158,7 +154,9 @@ namespace PropHunt
 
             if(IsServer)
             {
-                if(Client.All.Count >= MinPlayers)
+                int seekerCount = GetTeamPlayerCount(SeekerTeam.Index);
+                int propCount = GetTeamPlayerCount(PropTeam.Index);
+                if(seekerCount + propCount >= MinPlayers)
                 {
                     if(Round is WaitingRound || Round == null)
                         ChangeRound(HidingRound);
@@ -230,6 +228,22 @@ namespace PropHunt
                     break;
                 }
             }
+        }
+
+        [ClientRpc]
+        public static void UpdateRound(string roundName)
+        {
+            BaseRound round;
+            if(roundName == "Hiding")
+                round = HidingRound;
+            else if(roundName == "Seeking")
+                round = SeekingRound;
+            else if(roundName == "Finished")
+                round = FinishedRound;
+            else
+                round = WaitingRound;
+
+            Round = round;
         }
 
         [ClientRpc]

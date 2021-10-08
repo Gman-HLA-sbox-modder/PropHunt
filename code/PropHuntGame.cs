@@ -44,6 +44,9 @@ namespace PropHunt
 
         [ServerVar("ph_min_players", Help = "The minimum players required to start.")]
         public static int MinPlayers { get; set; } = 2;
+        
+        [ServerVar("ph_outofbounds_height", Help = "The height at which players are killed when falling outside the map.")]
+        public static float KillHeight { get; set; } = 0f;
 
 		public PropHuntGame()
 		{

@@ -77,6 +77,9 @@ namespace PropHunt
 			//
 			SimulateActiveChild(cl, ActiveChild);
 
+            if(IsServer && Position.z <= PropHuntGame.KillHeight)
+                Respawn();
+
             if(PropHuntGame.GetTeam(TeamIndex) is PropTeam)
             {
                 if(Input.Pressed(InputButton.Use))

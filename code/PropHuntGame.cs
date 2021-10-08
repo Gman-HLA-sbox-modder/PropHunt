@@ -118,18 +118,6 @@ namespace PropHunt
             UpdateTimerEnd(time);
         }
 
-        public static int GetTeamPlayerCount(int teamIndex)
-        {
-            int count = 0;
-            foreach(Client client in Client.All)
-            {
-                PropHuntPlayer player = client.Pawn as PropHuntPlayer;
-                if(player.TeamIndex == teamIndex)
-                    count++;
-            }
-            return count;
-        }
-
         [Event.Hotload]
         public void HotloadUpdate()
         {
@@ -197,8 +185,8 @@ namespace PropHunt
 
             if(IsServer)
             {
-                int seekerCount = GetTeamPlayerCount(SeekerTeam.Index);
-                int propCount = GetTeamPlayerCount(PropTeam.Index);
+                int seekerCount = GetPlayersByTeam(SeekerTeam.Index).Count;
+                int propCount = GetPlayersByTeam(PropTeam.Index).Count;
                 if(seekerCount + propCount >= MinPlayers)
                 {
                     if(Round is WaitingRound || Round == null)

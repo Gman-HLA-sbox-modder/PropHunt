@@ -29,12 +29,12 @@ namespace PropHunt
 
         private void CheckPlayerCount()
         {
-            if(PropHuntGame.GetTeamPlayerCount(PropHuntGame.SeekerTeam.Index) == 0)
+            if(PropHuntGame.GetPlayersByTeam(PropHuntGame.SeekerTeam.Index).Count == 0)
             {
                 //Props win
                 PropHuntGame.ChangeRound(PropHuntGame.FinishedRound);
             }
-            else if(PropHuntGame.GetTeamPlayerCount(PropHuntGame.PropTeam.Index) == 0)
+            else if(PropHuntGame.GetPlayersByTeam(PropHuntGame.PropTeam.Index).Count == 0)
             {
                 //Seekers win
                 PropHuntGame.ChangeRound(PropHuntGame.FinishedRound);

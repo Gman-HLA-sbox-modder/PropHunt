@@ -84,6 +84,24 @@ namespace PropHunt
             return teams[index - 1];
         }
 
+        public static List<PropHuntPlayer> GetPlayersByTeam(int team, bool alive = false)
+        {
+            List<PropHuntPlayer> list = new List<PropHuntPlayer>();
+
+            foreach(Client client in Client.All)
+            {
+                if(client.Pawn is PropHuntPlayer player && player.TeamIndex == team)
+                {
+                    if(!alive || player.LifeState == LifeState.Alive)
+                    {
+                        list.Add(player);
+                    }
+                }
+            }
+
+            return list;
+        }
+
         public static void ChangeRound(BaseRound round)
         {
             Round?.Finish();

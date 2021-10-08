@@ -24,6 +24,8 @@ namespace PropHunt
 	{
         public MainHud MainHud;
 
+        public static List<MapProp> MapProps = new List<MapProp>();
+
         public static SeekerTeam SeekerTeam { get; private set; }
         public static PropTeam PropTeam { get; private set; }
 
@@ -164,6 +166,29 @@ namespace PropHunt
             Round?.OnPlayerLeave(client.Pawn as PropHuntPlayer);
 
             base.ClientDisconnect(client, reason);
+        }
+
+        public override void PostLevelLoaded()
+        {
+            base.PostLevelLoaded();
+
+            if(IsClient)
+                return;
+
+            foreach(Entity entity in All)
+            {
+                if(entity is Prop prop && entity.ClassInfo?.Name == "prop_physics")
+                {
+                    MapProp mapProp = new MapProp();
+                    mapProp.ClassName = prop.ClassInfo.Name;
+                    mapProp.Model = prop.GetModel();
+                    mapProp.Position = prop.Position;
+                    mapProp.Rotation = prop.Rotation;
+                    mapProp.Scale = prop.Scale;
+                    mapProp.Color = prop.RenderColor;
+                    MapProps.Add(mapProp);
+                }
+            }
         }
 
         public override void Simulate(Client cl)

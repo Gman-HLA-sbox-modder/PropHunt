@@ -9,8 +9,6 @@ namespace PropHunt
 
         public override void OnStart()
         {
-            Log.Info(RoundName + " Round has started.");
-
             foreach(Client client in Client.All)
             {
                 PropHuntPlayer player = client.Pawn as PropHuntPlayer;

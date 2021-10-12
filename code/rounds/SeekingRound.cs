@@ -7,11 +7,6 @@ namespace PropHunt
         public override int RoundDuration => 180;
         public override string RoundName => "Seeking";
 
-        public override void OnStart()
-        {
-            Log.Info(RoundName + " Round has started.");
-        }
-
         public override void OnPlayerKilled(PropHuntPlayer player)
         {
             CheckPlayerCount();

@@ -2,35 +2,41 @@ Timer {
 	position: absolute;
 	left: 50%;
 	top: 50px;
-	background-color: rgba(0, 0, 0, 0.3);
-	border-radius: 7px;
-	width: 200px;
+	min-width: 100px;
 	transform: translateX(-50%);
-	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 7px;
 
-	.Title {
-		position: relative;
-		display: inline-block;
-		margin: 5px;
+	.Round {
+		padding: 5px;
 		color: #F0A000;
 		font-family: Verdana;
 		font-size: 20px;
-		flex-grow: 1;
 	}
 
-	.Text {
-		position: center;
-		display: inline-block;
-		margin: 5px;
+	.Timer {
+		display: none;
+		padding-bottom: 5px;
+		flex-direction: column;
+		align-items: center;
 		color: #F0A000;
 		font-family: Verdana;
 		font-size: 20px;
-		flex-grow: 1;
+
+		.Title {
+			font-size: 12px;
+			font-weight: bold;
+		}
+
+		&.Show {
+			display: block;
+		}
 	}
 }
 
-	.Hidden {
-		display: none;
-	}
+.Hidden {
+	display: none;
+}

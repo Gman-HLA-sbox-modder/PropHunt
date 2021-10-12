@@ -23,6 +23,7 @@ namespace PropHunt
     public partial class PropHuntGame : Sandbox.Game
 	{
         private static List<BaseTeam> teams;
+        private static List<BaseRound> rounds;
 
         public MainHud MainHud;
 
@@ -65,17 +66,23 @@ namespace PropHunt
 			}
 
             teams = new List<BaseTeam>();
+            rounds = new List<BaseRound>();
 
             SeekerTeam = new SeekerTeam();
             PropTeam = new PropTeam();
+
+            AddTeam(SeekerTeam);
+            AddTeam(PropTeam);
 
             WaitingRound = new WaitingRound();
             HidingRound = new HidingRound();
             SeekingRound = new SeekingRound();
             FinishedRound = new FinishedRound();
 
-            AddTeam(SeekerTeam);
-            AddTeam(PropTeam);
+            AddRound(WaitingRound);
+            AddRound(HidingRound);
+            AddRound(SeekingRound);
+            AddRound(FinishedRound);
         }
 
         public void AddTeam(BaseTeam team)
@@ -110,12 +117,26 @@ namespace PropHunt
             return list;
         }
 
+        public void AddRound(BaseRound round)
+        {
+            rounds.Add(round);
+            round.Index = rounds.Count;
+        }
+
+        public static BaseRound GetRound(int index)
+        {
+            if(index <= 0 || index > rounds.Count)
+                return null;
+
+            return rounds[index - 1];
+        }
+
         public static void ChangeRound(BaseRound round)
         {
             Round?.Finish();
             Round = round;
             Round.Start();
-            UpdateRound(round.RoundName);
+            UpdateRound(round.Index);
         }
 
         public static void SetTimerEnd(float time)
@@ -248,45 +269,16 @@ namespace PropHunt
         public static void SetRound(string round)
         {
             int index = int.Parse(round);
-            switch(index)
-            {
-                case 1:
-                {
-                    ChangeRound(HidingRound);
-                    break;
-                }
-                case 2:
-                {
-                    ChangeRound(SeekingRound);
-                    break;
-                }
-                case 3:
-                {
-                    ChangeRound(FinishedRound);
-                    break;
-                }
-                default:
-                {
-                    ChangeRound(WaitingRound);
-                    break;
-                }
-            }
+            if(index > 0)
+                ChangeRound(GetRound(index));
+            else
+                ChangeRound(WaitingRound);
         }
 
         [ClientRpc]
-        public static void UpdateRound(string roundName)
+        public static void UpdateRound(int index)
         {
-            BaseRound round;
-            if(roundName == "Hiding")
-                round = HidingRound;
-            else if(roundName == "Seeking")
-                round = SeekingRound;
-            else if(roundName == "Finished")
-                round = FinishedRound;
-            else
-                round = WaitingRound;
-
-            Round = round;
+            Round = GetRound(index);
         }
 
         [ClientRpc]

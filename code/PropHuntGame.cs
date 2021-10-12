@@ -22,6 +22,8 @@ namespace PropHunt
     [Library("prophunt", Title = "Prop Hunt")]
     public partial class PropHuntGame : Sandbox.Game
 	{
+        private static List<BaseTeam> teams;
+
         public MainHud MainHud;
 
         public static List<MapProp> MapProps = new List<MapProp>();
@@ -39,8 +41,9 @@ namespace PropHunt
 
         [Net]
         public static float TimerEnd { get; private set; }
-
-        private static List<BaseTeam> teams;
+        
+        [Net]
+        public static int Winner { get; private set; }
 
         [ServerVar("ph_min_players", Help = "The minimum players required to start.")]
         public static int MinPlayers { get; set; } = 2;
@@ -119,6 +122,12 @@ namespace PropHunt
         {
             TimerEnd = time;
             UpdateTimerEnd(time);
+        }
+
+        public static void SetWinner(BaseTeam team)
+        {
+            Winner = team.Index;
+            UpdateWinner(team.Index);
         }
 
         [Event.Hotload]
@@ -290,6 +299,12 @@ namespace PropHunt
         public static void ToggleTeamSelection(PropHuntPlayer player, bool b)
         {
             player.ToggleTeamSelection(b);
+        }
+
+        [ClientRpc]
+        public static void UpdateWinner(int teamIndex)
+        {
+            Winner = teamIndex;
         }
     }
 }

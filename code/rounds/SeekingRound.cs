@@ -24,19 +24,20 @@ namespace PropHunt
 
         public override void OnTimerEnd()
         {
+            PropHuntGame.SetWinner(PropHuntGame.PropTeam);
             PropHuntGame.ChangeRound(new FinishedRound());
         }
 
         private void CheckPlayerCount()
         {
-            if(PropHuntGame.GetPlayersByTeam(PropHuntGame.SeekerTeam.Index).Count == 0)
+            if(PropHuntGame.GetPlayersByTeam(PropHuntGame.SeekerTeam.Index, true).Count == 0)
             {
-                //Props win
+                PropHuntGame.SetWinner(PropHuntGame.PropTeam);
                 PropHuntGame.ChangeRound(PropHuntGame.FinishedRound);
             }
-            else if(PropHuntGame.GetPlayersByTeam(PropHuntGame.PropTeam.Index).Count == 0)
+            else if(PropHuntGame.GetPlayersByTeam(PropHuntGame.PropTeam.Index, true).Count == 0)
             {
-                //Seekers win
+                PropHuntGame.SetWinner(PropHuntGame.SeekerTeam);
                 PropHuntGame.ChangeRound(PropHuntGame.FinishedRound);
             }
         }

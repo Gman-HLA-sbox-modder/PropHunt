@@ -1,0 +1,26 @@
+EndScreen {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+
+	.Background {
+		width: 60%;
+		height: 60%;
+		background-color: rgba(0, 0, 0, 0.75);
+		border-radius: 7px;
+		justify-content: center;
+
+		.Title {
+			color: #F0A000;
+			font-family: Verdana;
+			font-size: 50px;
+		}
+	}
+
+	&.Show {
+		opacity: 1;
+	}
+}

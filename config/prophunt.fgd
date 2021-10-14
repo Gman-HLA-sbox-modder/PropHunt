@@ -22,6 +22,16 @@
 ]
 
 //
+// PropHunt.Fists
+//
+@PointClass base(BaseProperties_prophunt) = weapon_fists : ""
+[
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+//
 // PropHunt.Shotgun
 //
 @PointClass base(BaseProperties_prophunt) = weapon_shotgun : ""

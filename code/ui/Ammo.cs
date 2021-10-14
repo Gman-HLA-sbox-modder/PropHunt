@@ -37,6 +37,9 @@ namespace PropHunt
             if(weapon == null)
                 return;
 
+            if(weapon.ClipSize == 0)
+                return;
+
             AmmoBackground.RemoveClass("Hidden");
 
             CounterText.Text = weapon.AmmoClip.ToString();

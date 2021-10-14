@@ -53,7 +53,20 @@ namespace PropHunt
 
         public override void AttackSecondary()
         {
-            // Grenade lob
+            TimeSinceSecondaryAttack = 0;
+
+            if(Host.IsClient)
+                return;
+
+            Ray ray = new Ray(Owner.EyePos, Owner.EyeRot.Forward);
+            TraceResult tr = Trace.Ray(ray, 50).Ignore(Owner).WorldAndEntities().Run();
+            new Grenade()
+            {
+                Position = tr.EndPos,
+                Rotation = Owner.EyeRot,
+                Velocity = Owner.EyeRot.Forward * 1000,
+                Owner = Owner
+            };
         }
 
         [ClientRpc]

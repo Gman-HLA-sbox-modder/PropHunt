@@ -161,7 +161,15 @@ namespace PropHunt
         private void UseProp(Prop prop)
         {
             if(GetModel() == prop.GetModel())
+            {
+                if(Scale != prop.Scale)
+                    Scale = prop.Scale;
+
+                if(RenderColor != prop.RenderColor)
+                    RenderColor = prop.RenderColor;
+
                 return;
+            }
 
             SetModel(prop.GetModel());
             Scale = prop.Scale;
@@ -169,7 +177,6 @@ namespace PropHunt
 
             Animator = new PropAnimator();
             Controller = new PropController();
-            PhysicsEnabled = false;
             Clothing.ClearEntities();
 
             float multiplier = Math.Clamp(Health / MaxHealth, 0, 1);

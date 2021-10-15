@@ -64,7 +64,7 @@ namespace PropHunt
             {
                 Position = tr.EndPos,
                 Rotation = Owner.EyeRot,
-                Velocity = Owner.EyeRot.Forward * 1000,
+                Velocity = Owner.EyeRot.Forward * 1750,
                 Owner = Owner
             };
         }

@@ -247,6 +247,9 @@ namespace PropHunt
             team = team.ToLower();
             team = team.Trim();
 
+            if(Round != WaitingRound && player.TeamIndex > 0)
+                return;
+
             if(team == "seeker" || team == "seekers")
             {
                 if(player.TeamIndex == SeekerTeam.Index)

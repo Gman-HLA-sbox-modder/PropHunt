@@ -16,13 +16,12 @@ namespace PropHunt
             //Custom
             AddChild<Ammo>();
             AddChild<Blind>();
+            AddChild<Crosshair>();
             AddChild<EndScreen>();
             AddChild<Health>();
             AddChild<Team>();
             AddChild<TeamSelection>();
             AddChild<Timer>();
-
-            CrosshairCanvas.SetCrosshair(new Crosshair());
         }
     }
 }

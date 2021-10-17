@@ -3,7 +3,7 @@ using Sandbox.UI;
 
 namespace PropHunt
 {
-    public partial class Crosshair : RootPanel
+    public partial class Crosshair : Panel
     {
         public Crosshair()
         {
@@ -19,7 +19,14 @@ namespace PropHunt
             if(player == null)
                 return;
 
-            SetClass("Hidden", PropHuntGame.GetTeam(player.TeamIndex) == PropHuntGame.SeekerTeam && PropHuntGame.Round == PropHuntGame.HidingRound);
+            RemoveClass("Hidden");
+
+            if(PropHuntGame.GetTeam(player.TeamIndex) == PropHuntGame.SeekerTeam && PropHuntGame.Round == PropHuntGame.HidingRound)
+                AddClass("Hidden");
+            else if(player.TeamIndex == 0)
+                AddClass("Hidden");
+            else if(player.LifeState != LifeState.Alive)
+                AddClass("Hidden");
         }
     }
 }

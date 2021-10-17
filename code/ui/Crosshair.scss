@@ -1,15 +1,19 @@
-.Crosshair {
+Crosshair {
 	position: absolute;
-	left: 50%;
-	top: 50%;
-	background-color: white;
-	border-radius: 10px;
-	width: 4px;
-	height: 4px;
-	transform: translateX(-50%) translateY(-50%);
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
 	opacity: 1;
-}
 
-.Hidden {
-	opacity: 0;
+	.Crosshair {
+		background-color: white;
+		border-radius: 10px;
+		width: 4px;
+		height: 4px;
+	}
+
+	&.Hidden {
+		opacity: 0;
+	}
 }

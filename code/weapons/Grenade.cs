@@ -48,6 +48,11 @@ namespace PropHunt
                 if(ent.LifeState != LifeState.Alive)
                     continue;
 
+                if(ent is PropHuntPlayer player)
+                    if(ent != Owner)
+                        if(player.TeamIndex == ((PropHuntPlayer)Owner).TeamIndex)
+                            continue;
+
                 if(!ent.PhysicsBody.IsValid())
                     continue;
 

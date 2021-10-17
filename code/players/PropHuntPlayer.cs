@@ -179,6 +179,8 @@ namespace PropHunt
             Controller = new PropController();
             Clothing.ClearEntities();
 
+            EnableHitboxes = false;
+
             float multiplier = Math.Clamp(Health / MaxHealth, 0, 1);
             float health = (float)Math.Pow(prop.CollisionBounds.Volume, 0.5f) * 0.5f;
             health = (float)Math.Round(health / 5) * 5;

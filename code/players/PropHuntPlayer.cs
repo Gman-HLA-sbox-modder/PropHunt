@@ -140,6 +140,11 @@ namespace PropHunt
                 if(attacker.TeamIndex == TeamIndex)
                     return;
             }
+            else if(info.Attacker.Owner is PropHuntPlayer owner && owner != this)
+            {
+                if(owner.TeamIndex == TeamIndex)
+                    return;
+            }
 
             base.TakeDamage(info);
         }

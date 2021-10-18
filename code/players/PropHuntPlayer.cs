@@ -29,6 +29,15 @@ namespace PropHunt
 
         public override void Respawn()
 		{
+            if(PropHuntGame.Round == PropHuntGame.SeekingRound || PropHuntGame.Round == PropHuntGame.FinishedRound || TeamIndex == 0)
+            {
+                Host.AssertServer();
+                LifeState = LifeState.Dead;
+                Camera = new SpectatorCamera();
+                ResetInterpolation();
+                return;
+            }
+
             Inventory.DeleteContents();
             SetModel("models/citizen/citizen.vmdl");
             Clothing.DressEntity(this);

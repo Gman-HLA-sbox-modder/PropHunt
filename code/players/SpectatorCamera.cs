@@ -15,6 +15,7 @@ namespace PropHunt
             if(Local.Pawn is not PropHuntPlayer player)
                 return;
 
+            bool showSpawn = false;
             if(targetPlayer == null || !targetPlayer.IsValid() || Input.Pressed(InputButton.Attack1) || Input.Pressed(InputButton.Attack2))
             {
                 List<PropHuntPlayer> players = PropHuntGame.GetPlayersByTeam(player.TeamIndex, true);
@@ -32,24 +33,34 @@ namespace PropHunt
 
                     targetPlayer = players[targetId];
                 }
+                else
+                {
+                    Pos = new Vector3();
+                    Rot = new Rotation();
+                    showSpawn = true;
+                }
             }
 
-            AnimEntity pawn = targetPlayer;
+            if(!showSpawn)
+            {
+                AnimEntity pawn = targetPlayer;
 
-            if(pawn == null)
-                return;
+                if(pawn == null)
+                    return;
 
-            Pos = pawn.Position;
-            Vector3 targetPos;
+                Local.Pawn.Health = targetPlayer.Health;
 
-            Pos += Vector3.Up * Math.Max(pawn.CollisionBounds.Maxs.z * pawn.Scale * 0.75f, 8f);
-            Rot = Rotation.FromAxis(Vector3.Up, 4) * Input.Rotation;
+                Pos = pawn.Position;
 
-            targetPos = Pos + Rot.Backward * orbitDistance;
+                Pos += Vector3.Up * Math.Max(pawn.CollisionBounds.Maxs.z * pawn.Scale * 0.75f, 8f);
+                Rot = Rotation.FromAxis(Vector3.Up, 4) * Input.Rotation;
 
-            Pos += Vector3.Up * 0f;
-            TraceResult tr = Trace.Ray(Pos, targetPos).Ignore(pawn).Radius(8).Run();
-            Pos = tr.EndPos;
+                Vector3 targetPos = Pos + Rot.Backward * orbitDistance;
+
+                Pos += Vector3.Up * 0f;
+                TraceResult tr = Trace.Ray(Pos, targetPos).Ignore(pawn).Radius(8).Run();
+                Pos = tr.EndPos;
+            }
 
             FieldOfView = 70;
             Viewer = null;

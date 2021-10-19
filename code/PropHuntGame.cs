@@ -54,17 +54,6 @@ namespace PropHunt
 
         public PropHuntGame()
         {
-            if(IsServer)
-            {
-                Log.Info("My Gamemode Has Created Serverside!");
-            }
-
-            if(IsClient)
-            {
-                Log.Info("My Gamemode Has Created Clientside!");
-                MainHud = new MainHud();
-            }
-
             teams = new List<BaseTeam>();
             rounds = new List<BaseRound>();
 
@@ -83,6 +72,9 @@ namespace PropHunt
             AddRound(HidingRound);
             AddRound(SeekingRound);
             AddRound(FinishedRound);
+
+            if(IsClient)
+                MainHud = new MainHud();
         }
 
         public void AddTeam(BaseTeam team)

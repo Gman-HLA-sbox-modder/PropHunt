@@ -10,8 +10,11 @@ namespace PropHunt
         {
             StyleSheet.Load("/ui/MainHud.scss");
             PropHuntPlayer player = Local.Pawn as PropHuntPlayer;
-            BaseTeam team = PropHuntGame.GetTeam(player.TeamIndex);
-            AddClass(team?.HudName);
+            if(player != null)
+            {
+                BaseTeam team = PropHuntGame.GetTeam(player.TeamIndex);
+                AddClass(team?.HudName);
+            }
 
             //Default
             AddChild<ChatBox>();

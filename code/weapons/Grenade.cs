@@ -27,7 +27,7 @@ namespace PropHunt
             {
                 Sound = "sounds/common/explosions/explo_gas_can_01.vsnd",
                 Damage = 120f,
-                Radius = 100f,
+                Radius = 200f,
                 Force = 100f
             };
 

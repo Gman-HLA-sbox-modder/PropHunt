@@ -246,6 +246,14 @@ namespace PropHunt
             }
         }
 
+        public override void DoPlayerNoclip(Client player)
+        {
+        }
+
+        public override void DoPlayerDevCam(Client player)
+        {
+        }
+
         [ServerCmd("ph_jointeam")]
         public static void JoinTeam(string team)
         {

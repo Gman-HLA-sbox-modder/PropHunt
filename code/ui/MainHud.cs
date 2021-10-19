@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using Sandbox.UI;
+using Sandbox.UI.Construct;
 
 namespace PropHunt
 {
@@ -7,6 +8,11 @@ namespace PropHunt
     {
         public MainHud()
         {
+            StyleSheet.Load("/ui/MainHud.scss");
+            PropHuntPlayer player = Local.Pawn as PropHuntPlayer;
+            BaseTeam team = PropHuntGame.GetTeam(player.TeamIndex);
+            AddClass(team?.HudName);
+
             //Default
             AddChild<ChatBox>();
             AddChild<KillFeed>();
@@ -22,6 +28,22 @@ namespace PropHunt
             AddChild<Team>();
             AddChild<TeamSelection>();
             AddChild<Timer>();
+        }
+
+        public void OnJoinTeam(PropHuntPlayer player, BaseTeam team)
+        {
+            if(player != Local.Pawn)
+                return;
+
+            AddClass(team.HudName);
+        }
+
+        public void OnLeaveTeam(PropHuntPlayer player, BaseTeam team)
+        {
+            if(player != Local.Pawn)
+                return;
+
+            RemoveClass(team.HudName);
         }
     }
 }

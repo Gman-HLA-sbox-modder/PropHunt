@@ -20,7 +20,7 @@ namespace PropHunt
         public override void OnTimerEnd()
         {
             PropHuntGame.SetWinner(PropHuntGame.PropTeam);
-            PropHuntGame.ChangeRound(new FinishedRound());
+            PropHuntGame.ChangeRound(PropHuntGame.FinishedRound);
         }
 
         private void CheckPlayerCount()

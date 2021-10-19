@@ -15,9 +15,16 @@ TeamSelection {
 
 		.TeamText {
 			width: 100%;
-			color: #F0A000;
 			font-family: Verdana;
 			font-size: 50px;
+		}
+
+		&.Seekers {
+			color: #F0A000;
+		}
+
+		&.Props {
+			color: #00A0F0;
 		}
 	}
 }

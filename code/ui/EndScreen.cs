@@ -20,12 +20,15 @@ namespace PropHunt
         public override void Tick()
         {
             base.Tick();
-            RemoveClass("Show");
+            Classes = "";
             if(PropHuntGame.Round != PropHuntGame.FinishedRound)
                 return;
 
+            BaseTeam team = PropHuntGame.GetTeam(PropHuntGame.Winner);
+
             AddClass("Show");
-            Winner.Text = PropHuntGame.GetTeam(PropHuntGame.Winner)?.HudName + " wins!";
+            AddClass(team?.HudName);
+            Winner.Text = team?.HudName + " wins!";
         }
     }
 }

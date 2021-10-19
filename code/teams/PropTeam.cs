@@ -7,6 +7,7 @@ namespace PropHunt
 
         public override void OnJoin(PropHuntPlayer player)
         {
+            base.OnJoin(player);
             player.Respawn();
         }
     }

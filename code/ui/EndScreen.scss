@@ -14,7 +14,6 @@ EndScreen {
 		justify-content: center;
 
 		.Title {
-			color: #F0A000;
 			font-family: Verdana;
 			font-size: 50px;
 		}
@@ -22,5 +21,13 @@ EndScreen {
 
 	&.Show {
 		opacity: 1;
+	}
+
+	&.Seekers {
+		color: #F0A000;
+	}
+
+	&.Props {
+		color: #00A0F0;
 	}
 }

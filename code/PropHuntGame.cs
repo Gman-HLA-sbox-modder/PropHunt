@@ -21,7 +21,7 @@ namespace PropHunt
     /// </summary>
     [Library("prophunt", Title = "Prop Hunt")]
     public partial class PropHuntGame : Sandbox.Game
-	{
+    {
         private static List<BaseTeam> teams;
         private static List<BaseRound> rounds;
 
@@ -42,28 +42,28 @@ namespace PropHunt
 
         [Net]
         public static float TimerEnd { get; private set; }
-        
+
         [Net]
         public static int Winner { get; private set; }
 
         [ServerVar("ph_min_players", Help = "The minimum players required to start.")]
         public static int MinPlayers { get; set; } = 2;
-        
+
         [ServerVar("ph_outofbounds_height", Help = "The height at which players are killed when falling outside the map.")]
         public static float KillHeight { get; set; } = 0f;
 
-		public PropHuntGame()
-		{
-			if(IsServer)
-			{
-				Log.Info("My Gamemode Has Created Serverside!");
-			}
+        public PropHuntGame()
+        {
+            if(IsServer)
+            {
+                Log.Info("My Gamemode Has Created Serverside!");
+            }
 
-			if(IsClient)
-			{
-				Log.Info("My Gamemode Has Created Clientside!");
+            if(IsClient)
+            {
+                Log.Info("My Gamemode Has Created Clientside!");
                 MainHud = new MainHud();
-			}
+            }
 
             teams = new List<BaseTeam>();
             rounds = new List<BaseRound>();
@@ -161,18 +161,36 @@ namespace PropHunt
             MainHud = new MainHud();
         }
 
+        [Event("PropHunt.JoinTeam")]
+        public void OnJoinTeam(PropHuntPlayer player, BaseTeam team)
+        {
+            if(IsServer)
+                OnClientJoinTeam(player, team.Index);
+            else
+                MainHud.OnJoinTeam(player, team);
+        }
+
+        [Event("PropHunt.LeaveTeam")]
+        public void OnLeaveTeam(PropHuntPlayer player, BaseTeam team)
+        {
+            if(IsServer)
+                OnClientLeaveTeam(player, team.Index);
+            else
+                MainHud.OnLeaveTeam(player, team);
+        }
+
         /// <summary>
         /// A client has joined the server. Make them a pawn to play with
         /// </summary>
         public override void ClientJoined(Client client)
-		{
-			base.ClientJoined(client);
+        {
+            base.ClientJoined(client);
 
-			var player = new PropHuntPlayer(client);
-			client.Pawn = player;
+            var player = new PropHuntPlayer(client);
+            client.Pawn = player;
 
             player.Respawn();
-		}
+        }
 
         public override void OnKilled(Entity pawn)
         {
@@ -300,6 +318,18 @@ namespace PropHunt
         public static void UpdateWinner(int teamIndex)
         {
             Winner = teamIndex;
+        }
+
+        [ClientRpc]
+        public static void OnClientJoinTeam(PropHuntPlayer player, int team)
+        {
+            Event.Run("PropHunt.JoinTeam", player, GetTeam(team));
+        }
+
+        [ClientRpc]
+        public static void OnClientLeaveTeam(PropHuntPlayer player, int team)
+        {
+            Event.Run("PropHunt.LeaveTeam", player, GetTeam(team));
         }
     }
 }

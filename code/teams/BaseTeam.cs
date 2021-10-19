@@ -1,3 +1,5 @@
+using Sandbox;
+
 namespace PropHunt
 {
     public abstract class BaseTeam
@@ -17,8 +19,14 @@ namespace PropHunt
             OnLeave(player);
         }
 
-        public virtual void OnJoin(PropHuntPlayer player) { }
+        public virtual void OnJoin(PropHuntPlayer player)
+        {
+            Event.Run("PropHunt.JoinTeam", player, this);
+        }
 
-        public virtual void OnLeave(PropHuntPlayer player) { }
+        public virtual void OnLeave(PropHuntPlayer player)
+        {
+            Event.Run("PropHunt.LeaveTeam", player, this);
+        }
     }
 }

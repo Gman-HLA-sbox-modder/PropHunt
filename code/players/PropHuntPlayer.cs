@@ -87,7 +87,7 @@ namespace PropHunt
 			SimulateActiveChild(cl, ActiveChild);
 
             if(IsServer && Position.z <= PropHuntGame.KillHeight)
-                Respawn();
+                TakeDamage(DamageInfo.Generic(1000));
 
             if(PropHuntGame.GetTeam(TeamIndex) is PropTeam)
             {
@@ -140,7 +140,7 @@ namespace PropHunt
                 if(attacker.TeamIndex == TeamIndex)
                     return;
             }
-            else if(info.Attacker.Owner is PropHuntPlayer owner && owner != this)
+            else if(info.Attacker?.Owner is PropHuntPlayer owner && owner != this)
             {
                 if(owner.TeamIndex == TeamIndex)
                     return;

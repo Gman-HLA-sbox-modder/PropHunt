@@ -8,6 +8,7 @@ namespace PropHunt
 
         public virtual string Name => "";
         public virtual string HudName => "";
+        public virtual Color32 Color => new Color32();
 
         public void Join(PropHuntPlayer player)
         {

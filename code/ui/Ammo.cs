@@ -1,6 +1,8 @@
 ﻿using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using System;
+using System.Collections.Generic;
 
 namespace PropHunt
 {
@@ -12,6 +14,12 @@ namespace PropHunt
 
         private Panel AltPanel;
         private Label AltText;
+
+        private Weapon lastWeapon;
+        private float startGlowBackground;
+
+        private int desiredOffset = 40;
+        private int offset = 40;
 
         public Ammo()
         {
@@ -32,7 +40,7 @@ namespace PropHunt
             base.Tick();
             AddClass("Hidden");
 
-            Entity player = Local.Pawn;
+            PropHuntPlayer player = Local.Pawn as PropHuntPlayer;
             if(player == null)
                 return;
 
@@ -49,32 +57,51 @@ namespace PropHunt
             if(weapon.ClipSize == 0)
                 return;
 
+            if(lastWeapon != weapon)
+            {
+                lastWeapon = weapon;
+                startGlowBackground = Time.Now;
+            }
+
             RemoveClass("Hidden");
 
             CounterText.Text = weapon.AmmoClip.ToString();
             ReserveText.Text = weapon.AmmoReserve.ToString();
 
+            float color = Math.Max(0, (1 - (Time.Now - startGlowBackground)) * 255);
+            AmmoPanel.Style.BackgroundColor = $"rgba({color:N0}, {color:N0}, 0, 0.3);";
+            AltPanel.Style.BackgroundColor = $"rgba({color:N0}, {color:N0}, 0, 0.3);";
+            AmmoPanel.Style.Right = offset;
+
+            if(weapon.AmmoClip == 0)
+                AmmoPanel.Style.FontColor = "#FF0000";
+            else
+                AmmoPanel.Style.FontColor = PropHuntGame.GetTeam(player.TeamIndex)?.Color.Hex;
+
             if(weapon.MaxAlt > 0)
             {
                 AltPanel.RemoveClass("Hidden");
                 AltText.Text = weapon.AmmoAlt.ToString();
+                desiredOffset = 202;
 
-                if(AmmoPanel.Style.Right != 202)
-                {
-                    AmmoPanel.Style.Right = 202;
-                    AmmoPanel.Style.Dirty();
-                }
+                if(weapon.AmmoAlt == 0)
+                    AltPanel.Style.FontColor = "#FF0000";
+                else
+                    AltPanel.Style.FontColor = PropHuntGame.GetTeam(player.TeamIndex)?.Color.Hex;
             }
             else
             {
                 AltPanel.AddClass("Hidden");
-
-                if(AmmoPanel.Style.Right != 40)
-                {
-                    AmmoPanel.Style.Right = 40;
-                    AmmoPanel.Style.Dirty();
-                }
+                desiredOffset = 40;
             }
+
+            if(desiredOffset > offset)
+                offset += 3;
+            else if(desiredOffset < offset)
+                offset -= 3;
+
+            if(Math.Abs(desiredOffset - offset) < 3)
+                offset = desiredOffset;
         }
     }
 }

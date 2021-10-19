@@ -12,18 +12,23 @@ namespace PropHunt
         {
             StyleSheet.Load("/ui/Health.scss");
             Panel healthBackground = Add.Panel("Health");
-            HealthText = healthBackground.Add.Label("0", "HealthText");
             healthBackground.Add.Label("HEALTH", "HealthTextName");
+            HealthText = healthBackground.Add.Label("0", "HealthText");
         }
 
         public override void Tick()
         {
             base.Tick();
-            Entity player = Local.Pawn;
+            PropHuntPlayer player = Local.Pawn as PropHuntPlayer;
             if(player == null)
                 return;
 
             HealthText.Text = player.Health.CeilToInt().ToString();
+
+            if(player.Health.CeilToInt() < 20)
+                Style.FontColor = "#FF0000";
+            else
+                Style.FontColor = PropHuntGame.GetTeam(player.TeamIndex)?.Color.Hex;
         }
     }
 }

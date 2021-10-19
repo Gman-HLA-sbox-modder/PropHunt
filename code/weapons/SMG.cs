@@ -12,6 +12,7 @@ namespace PropHunt
         public override float ReloadTime => 5.0f;
         public override int ClipSize => 45;
         public override int MaxReserve => 225;
+        public override int MaxAlt => 3;
 
         public override void Spawn()
         {
@@ -53,6 +54,12 @@ namespace PropHunt
 
         public override void AttackSecondary()
         {
+            if(!UseAmmo(1, true))
+            {
+                PlaySound("rust_smg.dryfire");
+                return;
+            }
+
             TimeSinceSecondaryAttack = 0;
 
             if(Host.IsClient)

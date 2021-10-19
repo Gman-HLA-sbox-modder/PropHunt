@@ -6,22 +6,25 @@ namespace PropHunt
 {
     public partial class Ammo : Panel
     {
-        private Panel AmmoBackground;
         private Label CounterText;
         private Label ReserveText;
+        private Label AltText;
+        private Panel Alt;
 
         public Ammo()
         {
             StyleSheet.Load("/ui/Ammo.scss");
-            AmmoBackground = Add.Panel();
-            CounterText = AmmoBackground.Add.Label("0", "Counter");
-            ReserveText = AmmoBackground.Add.Label("0", "Reserve");
+            Panel panel = Add.Panel();
+            CounterText = panel.Add.Label("0", "Counter");
+            ReserveText = panel.Add.Label("0", "Reserve");
+            Alt = Add.Panel("Alt");
+            AltText =  Alt.Add.Label("0", "Counter");
         }
 
         public override void Tick()
         {
             base.Tick();
-            AmmoBackground.AddClass("Hidden");
+            AddClass("Hidden");
 
             Entity player = Local.Pawn;
             if(player == null)
@@ -40,10 +43,12 @@ namespace PropHunt
             if(weapon.ClipSize == 0)
                 return;
 
-            AmmoBackground.RemoveClass("Hidden");
+            RemoveClass("Hidden");
+            Alt.SetClass("Hidden", weapon.MaxAlt == 0);
 
             CounterText.Text = weapon.AmmoClip.ToString();
             ReserveText.Text = weapon.AmmoReserve.ToString();
+            AltText.Text = weapon.AmmoAlt.ToString();
         }
     }
 }

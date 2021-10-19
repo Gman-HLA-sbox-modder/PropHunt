@@ -7,6 +7,7 @@ namespace PropHunt
         public virtual float ReloadTime => 3.0f;
         public virtual int ClipSize => 0;
         public virtual int MaxReserve => 0;
+        public virtual int MaxAlt => 0;
 
         public PickupTrigger PickupTrigger { get; protected set; }
 
@@ -25,6 +26,9 @@ namespace PropHunt
         [Net, Predicted]
         public int AmmoReserve { get; set; }
 
+        [Net, Predicted]
+        public int AmmoAlt { get; set; }
+
         public override void Spawn()
         {
             base.Spawn();
@@ -41,6 +45,7 @@ namespace PropHunt
 
             AmmoClip = ClipSize;
             AmmoReserve = MaxReserve;
+            AmmoAlt = MaxAlt;
         }
 
         public override void ActiveStart(Entity ent)
@@ -241,13 +246,24 @@ namespace PropHunt
             }
         }
 
-        public bool UseAmmo(int amount)
+        public bool UseAmmo(int amount, bool altFire = false)
         {
-            if(AmmoClip < amount)
-                return false;
+            if(altFire)
+            {
+                if(AmmoAlt < amount)
+                    return false;
 
-            AmmoClip -= amount;
-            return true;
+                AmmoAlt -= amount;
+                return true;
+            }
+            else
+            {
+                if(AmmoClip < amount)
+                    return false;
+
+                AmmoClip -= amount;
+                return true;
+            }
         }
     }
 }

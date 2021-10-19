@@ -2,8 +2,11 @@ Ammo {
 	position: absolute;
 	right: 50px;
 	bottom: 50px;
-	background-color: rgba(0, 0, 0, 0.3);
-	border-radius: 7px;
+
+	Panel {
+		background-color: rgba(0, 0, 0, 0.3);
+		border-radius: 7px;
+	}
 
 	.Counter {
 		margin: 5px;
@@ -21,9 +24,12 @@ Ammo {
 		font-size: 12px;
 		font-weight: bold;
 	}
+
+	.Alt {
+		margin-left: 30px;
+	}
 }
 
 .Hidden {
 	display: none;
 }
-

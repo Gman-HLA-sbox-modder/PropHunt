@@ -6,19 +6,25 @@ namespace PropHunt
 {
     public partial class Ammo : Panel
     {
+        private Panel AmmoPanel;
         private Label CounterText;
         private Label ReserveText;
+
+        private Panel AltPanel;
         private Label AltText;
-        private Panel Alt;
 
         public Ammo()
         {
             StyleSheet.Load("/ui/Ammo.scss");
-            Panel panel = Add.Panel();
-            CounterText = panel.Add.Label("0", "Counter");
-            ReserveText = panel.Add.Label("0", "Reserve");
-            Alt = Add.Panel("Alt");
-            AltText =  Alt.Add.Label("0", "Counter");
+
+            AmmoPanel = Add.Panel("Ammo");
+            AmmoPanel.Add.Label("AMMO", "AmmoText");
+            CounterText = AmmoPanel.Add.Label("0", "Counter");
+            ReserveText = AmmoPanel.Add.Label("0", "Reserve");
+
+            AltPanel = Add.Panel("Alt");
+            AltPanel.Add.Label("ALT", "AmmoText");
+            AltText = AltPanel.Add.Label("0", "Counter");
         }
 
         public override void Tick()
@@ -44,11 +50,31 @@ namespace PropHunt
                 return;
 
             RemoveClass("Hidden");
-            Alt.SetClass("Hidden", weapon.MaxAlt == 0);
 
             CounterText.Text = weapon.AmmoClip.ToString();
             ReserveText.Text = weapon.AmmoReserve.ToString();
-            AltText.Text = weapon.AmmoAlt.ToString();
+
+            if(weapon.MaxAlt > 0)
+            {
+                AltPanel.RemoveClass("Hidden");
+                AltText.Text = weapon.AmmoAlt.ToString();
+
+                if(AmmoPanel.Style.Right != 202)
+                {
+                    AmmoPanel.Style.Right = 202;
+                    AmmoPanel.Style.Dirty();
+                }
+            }
+            else
+            {
+                AltPanel.AddClass("Hidden");
+
+                if(AmmoPanel.Style.Right != 40)
+                {
+                    AmmoPanel.Style.Right = 40;
+                    AmmoPanel.Style.Dirty();
+                }
+            }
         }
     }
 }

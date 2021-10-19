@@ -1,7 +1,7 @@
 Timer {
 	position: absolute;
 	left: 50%;
-	top: 50px;
+	top: 36px;
 	min-width: 100px;
 	transform: translateX(-50%);
 	flex-direction: column;
@@ -11,23 +11,21 @@ Timer {
 	border-radius: 7px;
 
 	.Round {
-		padding: 5px;
+		padding: 6px 10px;
 		font-family: Verdana;
-		font-size: 20px;
+		font-size: 16.5px;
+		font-weight: 700;
 	}
 
 	.Timer {
 		display: none;
+		margin-top: -5px;
 		padding-bottom: 5px;
 		flex-direction: column;
 		align-items: center;
 		font-family: Verdana;
-		font-size: 20px;
-
-		.Title {
-			font-size: 12px;
-			font-weight: bold;
-		}
+		font-size: 30px;
+		font-weight: 700;
 
 		&.Show {
 			display: block;

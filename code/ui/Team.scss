@@ -1,14 +1,18 @@
 Team {
 	position: absolute;
-	left: 50px;
-	top: 50px;
+	left: 37px;
+	bottom: 119px;
+	width: 229px;
+	height: 64px;
 	background-color: rgba(0, 0, 0, 0.3);
 	border-radius: 7px;
+	justify-content: center;
 
 	.Text {
-		margin: 5px;
+		align-items: center;
 		font-family: Verdana;
-		font-size: 50px;
+		font-size: 30px;
+		font-weight: 700;
 	}
 }
 

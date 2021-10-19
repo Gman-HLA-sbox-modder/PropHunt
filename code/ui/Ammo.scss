@@ -1,30 +1,62 @@
 Ammo {
 	position: absolute;
-	right: 50px;
-	bottom: 50px;
+	right: 0px;
+	bottom: 0px;
 
 	Panel {
+		position: absolute;
 		background-color: rgba(0, 0, 0, 0.3);
 		border-radius: 7px;
 	}
 
-	.Counter {
-		margin: 5px;
+	Label {
+		position: absolute;
+	}
+
+	.Ammo {
+		right: 40px;
+		bottom: 27px;
+		width: 297px;
+		height: 81px;
+	}
+
+	.AmmoText {
+		left: 17px;
+		bottom: 15px;
 		font-family: Verdana;
-		font-size: 50px;
+		font-size: 16.5px;
+		font-weight: 700;
+	}
+
+	.Counter {
+		left: 90px;
+		bottom: 5px;
+		font-family: HalfLife2;
+		font-size: 61px;
 	}
 
 	.Reserve {
-		position: relative;
-		top: 38px;
-		margin: 5px;
-		font-family: Verdana;
-		font-size: 12px;
-		font-weight: bold;
+		left: 220px;
+		bottom: 8px;
+		font-family: HalfLife2;
+		font-size: 31px;
+		font-weight: 700;
 	}
 
 	.Alt {
-		margin-left: 30px;
+		right: 22px;
+		bottom: 27px;
+		width: 162px;
+		height: 81px;
+
+		.AmmoText {
+			left: 18px;
+			bottom: 11px;
+		}
+
+		.Counter {
+			left: 58px;
+		}
 	}
 }
 

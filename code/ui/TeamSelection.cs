@@ -25,7 +25,6 @@ namespace PropHunt
             seeker.AddClass(PropHuntGame.SeekerTeam.HudName);
             prop.AddClass(PropHuntGame.PropTeam.HudName);
 
-            //Clicking stops working on Hotload
             seeker.AddEventListener("onclick", () =>
             {
                 PropHuntGame.JoinTeam("seeker");

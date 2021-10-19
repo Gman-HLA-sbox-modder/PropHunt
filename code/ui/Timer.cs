@@ -18,7 +18,7 @@ namespace PropHunt
 
             TimerPanel = Add.Panel("Timer");
 
-            TimerPanel.Add.Panel().Add.Label("Time left ", "Title");
+            TimerPanel.Add.Panel();
             TimerText = TimerPanel.Add.Panel().Add.Label("");
         }
 
@@ -29,7 +29,7 @@ namespace PropHunt
             if(PropHuntGame.Round == null)
                 return;
 
-            RoundText.Text = PropHuntGame.Round.RoundName;
+            RoundText.Text = PropHuntGame.Round.RoundName.ToUpper();
 
             if(PropHuntGame.Round == PropHuntGame.HidingRound || PropHuntGame.Round == PropHuntGame.SeekingRound)
             {

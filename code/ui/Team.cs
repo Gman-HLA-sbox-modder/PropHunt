@@ -28,7 +28,7 @@ namespace PropHunt
             else
                 TeamText.RemoveClass("Hidden");
 
-            TeamText.Text = team?.HudName;
+            TeamText.Text = team?.HudName.ToUpper();
         }
     }
 }

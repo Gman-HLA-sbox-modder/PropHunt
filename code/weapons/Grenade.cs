@@ -3,6 +3,7 @@ using System;
 
 namespace PropHunt
 {
+    [Library("weapon_grenade", Title = "Grenade", Spawnable = false)]
     public class Grenade : Prop
     {
         public override void Spawn()
@@ -68,7 +69,9 @@ namespace PropHunt
                 float force = explosion.Force * multiplier * (float)Math.Pow(ent.PhysicsBody.Mass, 0.5f);
                 Vector3 direction = (target - pos).Normal;
 
-                ent.TakeDamage(DamageInfo.Explosion(pos, direction * force, damage).WithAttacker(Owner));
+                DamageInfo damageInfo = DamageInfo.Explosion(pos, direction * force, damage).WithAttacker(Owner);
+                damageInfo.Weapon = this;
+                ent.TakeDamage(damageInfo);
             }
         }
     }

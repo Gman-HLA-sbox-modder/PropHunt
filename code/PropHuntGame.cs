@@ -260,10 +260,11 @@ namespace PropHunt
             if(ConsoleSystem.Caller.Pawn is not PropHuntPlayer player)
                 return;
 
-            ToggleTeamSelection(player, false);
-
             team = team.ToLower();
             team = team.Trim();
+
+            int seekerCount = GetPlayersByTeam(SeekerTeam.Index).Count;
+            int propCount = GetPlayersByTeam(PropTeam.Index).Count;
 
             if(Round != WaitingRound && player.TeamIndex > 0)
                 return;
@@ -271,6 +272,9 @@ namespace PropHunt
             if(team == "seeker" || team == "seekers")
             {
                 if(player.TeamIndex == SeekerTeam.Index)
+                    return;
+
+                if(seekerCount > propCount)
                     return;
 
                 player.SetTeam(SeekerTeam.Index);
@@ -281,9 +285,14 @@ namespace PropHunt
                 if(player.TeamIndex == PropTeam.Index)
                     return;
 
+                if(seekerCount < propCount)
+                    return;
+
                 player.SetTeam(PropTeam.Index);
                 Log.Info("Joined team " + PropTeam.HudName);
             }
+
+            ToggleTeamSelection(player, false);
         }
 
         [ServerCmd("ph_round")]

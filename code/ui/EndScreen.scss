@@ -7,8 +7,7 @@ EndScreen {
 	opacity: 0;
 
 	.Background {
-		width: 60%;
-		height: 60%;
+		padding: 12px;
 		background-color: rgba(0, 0, 0, 0.75);
 		border-radius: 7px;
 		justify-content: center;
@@ -24,10 +23,10 @@ EndScreen {
 	}
 
 	&.Seekers {
-		color: #F0A000;
+		color: #FFF000;
 	}
 
 	&.Props {
-		color: #00A0F0;
+		color: #00F0FF;
 	}
 }

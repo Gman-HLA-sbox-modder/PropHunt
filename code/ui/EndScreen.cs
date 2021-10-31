@@ -1,7 +1,5 @@
-﻿using Sandbox;
-using Sandbox.UI;
+﻿using Sandbox.UI;
 using Sandbox.UI.Construct;
-using System;
 
 namespace PropHunt
 {
@@ -28,7 +26,7 @@ namespace PropHunt
 
             AddClass("Show");
             AddClass(team?.HudName);
-            Winner.Text = team?.HudName + " wins!";
+            Winner.Text = team?.HudName + " win!";
         }
     }
 }

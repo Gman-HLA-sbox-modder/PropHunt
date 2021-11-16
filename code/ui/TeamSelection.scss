@@ -39,6 +39,8 @@ TeamSelection {
 			.Image {
 				width: 396px;
 				height: 396px;
+				max-width: 396px;
+				max-height: 396px;
 				.Blocked {
 					width: 100%;
 					height: 100%;
@@ -50,7 +52,7 @@ TeamSelection {
 		&.Seekers {
 			color: #FFF000;
 			.Image {
-				background-image: url(/ui/seeker.png);
+				background-image: url(/ui/seekers.png);
 			}
 		}
 

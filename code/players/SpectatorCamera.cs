@@ -18,7 +18,10 @@ namespace PropHunt
             bool showSpawn = false;
             if(targetPlayer == null || !targetPlayer.IsValid() || Input.Pressed(InputButton.Attack1) || Input.Pressed(InputButton.Attack2))
             {
-                List<PropHuntPlayer> players = PropHuntGame.GetPlayersByTeam(player.TeamIndex, true);
+                List<PropHuntPlayer> players = PropHuntGame.GetPlayersByTeam(PropHuntGame.SeekerTeam.Index, true);
+                if(player.TeamIndex != PropHuntGame.SeekerTeam.Index)
+                    players.AddRange(PropHuntGame.GetPlayersByTeam(PropHuntGame.PropTeam.Index, true));
+
                 if(players.Count > 0)
                 {
                     if(Input.Pressed(InputButton.Attack2))

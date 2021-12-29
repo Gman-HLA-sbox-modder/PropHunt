@@ -51,7 +51,6 @@ namespace PropHunt
             else
                 Controller = new WalkController();
 
-
             //
             // Use StandardPlayerAnimator  (you can make your own PlayerAnimator for 100% control)
             //

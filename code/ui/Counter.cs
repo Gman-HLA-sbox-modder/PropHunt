@@ -24,6 +24,17 @@ namespace PropHunt
 
         public override void Tick()
         {
+            base.Tick();
+            AddClass("Hidden");
+
+            PropHuntPlayer player = Local.Pawn as PropHuntPlayer;
+            if(player == null)
+                return;
+
+            if(player.Health <= 0 || player.LifeState != LifeState.Alive)
+                return;
+
+            RemoveClass("Hidden");
             counterSeekers.Text = PropHuntGame.GetPlayersByTeam(PropHuntGame.SeekerTeam.Index, true).Count.ToString();
             counterProps.Text = PropHuntGame.GetPlayersByTeam(PropHuntGame.PropTeam.Index, true).Count.ToString();
         }

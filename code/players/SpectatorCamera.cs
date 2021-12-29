@@ -38,8 +38,8 @@ namespace PropHunt
                 }
                 else
                 {
-                    Pos = new Vector3();
-                    Rot = new Rotation();
+                    Position = new Vector3();
+                    Rotation = new Rotation();
                     showSpawn = true;
                 }
             }
@@ -53,16 +53,16 @@ namespace PropHunt
 
                 Local.Pawn.Health = targetPlayer.Health;
 
-                Pos = pawn.Position;
+                Position = pawn.Position;
 
-                Pos += Vector3.Up * Math.Max(pawn.CollisionBounds.Maxs.z * pawn.Scale * 0.75f, 8f);
-                Rot = Rotation.FromAxis(Vector3.Up, 4) * Input.Rotation;
+                Position += Vector3.Up * Math.Max(pawn.CollisionBounds.Maxs.z * pawn.Scale * 0.75f, 8f);
+                Rotation = Rotation.FromAxis(Vector3.Up, 4) * Input.Rotation;
 
-                Vector3 targetPos = Pos + Rot.Backward * orbitDistance;
+                Vector3 targetPos = Position + Rot.Backward * orbitDistance;
 
-                Pos += Vector3.Up * 0f;
+                Position += Vector3.Up * 0f;
                 TraceResult tr = Trace.Ray(Pos, targetPos).Ignore(pawn).Radius(8).Run();
-                Pos = tr.EndPos;
+                Position = tr.EndPos;
             }
 
             FieldOfView = 70;

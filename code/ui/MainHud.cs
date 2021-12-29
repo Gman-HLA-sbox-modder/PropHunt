@@ -25,6 +25,7 @@ namespace PropHunt
             //Custom
             AddChild<Ammo>();
             AddChild<Blind>();
+            AddChild<Counter>();
             AddChild<Crosshair>();
             AddChild<EndScreen>();
             AddChild<Health>();

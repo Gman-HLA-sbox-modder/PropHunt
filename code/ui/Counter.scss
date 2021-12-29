@@ -1,0 +1,33 @@
+Counter {
+	position: absolute;
+	left: 50%;
+	bottom: 27px;
+	width: 183px;
+	height: 81px;
+	transform: translateX(-50%);
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 7px;
+
+	.CounterText {
+		font-family: Verdana;
+		font-size: 20px;
+		font-weight: 700;
+		margin: 5px 0 5px 10px;
+	}
+
+	.Left {
+		width: 75%;
+		float: left;
+	}
+
+	.Right {
+		width: 25%;
+		float: right;
+	}
+
+	.Column {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+}

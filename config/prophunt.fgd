@@ -18,7 +18,6 @@
 //
 @PointClass base(BaseProperties_prophunt) = prophunt : "This is your game class. This is an entity that is created serverside when the game starts, and is replicated to the client.   You can use this to create things like HUDs and declare which player class to use for spawned players."
 [
-	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 ]
 
 //
@@ -49,6 +48,7 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
+	static(boolean) : "Static" : 0 : "If set, the prop will spawn with motion disabled and will act as a nav blocker until broken."
 	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"

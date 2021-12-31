@@ -153,6 +153,7 @@ namespace PropHunt
 			base.OnKilled();
 
 			EnableDrawing = false;
+            EnableAllCollisions = false;
             Inventory.DeleteContents();
 		}
 

@@ -186,10 +186,13 @@ namespace PropHunt
 
         public override void OnKilled(Entity pawn)
         {
-            if(pawn is PropHuntPlayer player)
-                Round?.OnPlayerKilled(player);
-
             base.OnKilled(pawn);
+
+            if(pawn is PropHuntPlayer player)
+            {
+                player.LifeState = LifeState.Dead;
+                Round?.OnPlayerKilled(player);
+            }
         }
 
         public override void ClientDisconnect(Client client, NetworkDisconnectionReason reason)

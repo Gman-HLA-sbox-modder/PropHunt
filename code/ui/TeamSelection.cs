@@ -63,6 +63,11 @@ namespace PropHunt
             SeekerPlayers.Text = seekerCount.ToString() + " Player" + (seekerCount == 1 ? "" : "s");
             PropPlayers.Text = propCount.ToString() + " Player" + (propCount == 1 ? "" : "s");
 
+            if(player.TeamIndex == PropHuntGame.SeekerTeam.Index)
+                seekerCount--;
+            else if(player.TeamIndex == PropHuntGame.PropTeam.Index)
+                propCount--;
+
             SeekerBlocked.SetClass("Blocked", seekerCount > propCount);
             PropBlocked.SetClass("Blocked", seekerCount < propCount);
         }

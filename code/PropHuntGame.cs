@@ -266,6 +266,11 @@ namespace PropHunt
             int seekerCount = GetPlayersByTeam(SeekerTeam.Index).Count;
             int propCount = GetPlayersByTeam(PropTeam.Index).Count;
 
+            if(player.TeamIndex == SeekerTeam.Index)
+                seekerCount--;
+            else if(player.TeamIndex == PropTeam.Index)
+                propCount--;
+
             if(Round != WaitingRound && player.TeamIndex > 0)
                 return;
 

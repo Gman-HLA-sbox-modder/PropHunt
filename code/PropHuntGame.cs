@@ -303,7 +303,7 @@ namespace PropHunt
             ToggleTeamSelection(player, false);
         }
 
-        [ServerCmd("ph_round")]
+        /*[ServerCmd("ph_round")]
         public static void SetRound(string round)
         {
             int index = int.Parse(round);
@@ -311,7 +311,7 @@ namespace PropHunt
                 ChangeRound(GetRound(index));
             else
                 ChangeRound(WaitingRound);
-        }
+        }*/
 
         [ClientRpc]
         public static void UpdateRound(int index)

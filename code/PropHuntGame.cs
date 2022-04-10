@@ -19,7 +19,7 @@ namespace PropHunt
     /// You can use this to create things like HUDs and declare which player class
     /// to use for spawned players.
     /// </summary>
-    [Library("prophunt", Title = "Prop Hunt")]
+    [Library("prophunt", Title = "Ian's PropHunt")]
     public partial class PropHuntGame : Sandbox.Game
     {
         private static List<BaseTeam> teams;
@@ -215,7 +215,7 @@ namespace PropHunt
                 {
                     MapProp mapProp = new MapProp();
                     mapProp.ClassName = prop.ClassInfo.Name;
-                    mapProp.Model = prop.GetModel();
+                    //mapProp.Model = prop.GetModelName();
                     mapProp.Position = prop.Position;
                     mapProp.Rotation = prop.Rotation;
                     mapProp.Scale = prop.Scale;

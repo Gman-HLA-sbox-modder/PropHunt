@@ -76,7 +76,7 @@ namespace PropHunt
             if(weapon.AmmoClip == 0)
                 AmmoPanel.Style.FontColor = "#FF0000";
             else
-                AmmoPanel.Style.FontColor = PropHuntGame.GetTeam(player.TeamIndex)?.Color.Hex;
+                AltPanel.Style.FontColor = "#FF0000";
 
             if(weapon.MaxAlt > 0)
             {
@@ -87,7 +87,7 @@ namespace PropHunt
                 if(weapon.AmmoAlt == 0)
                     AltPanel.Style.FontColor = "#FF0000";
                 else
-                    AltPanel.Style.FontColor = PropHuntGame.GetTeam(player.TeamIndex)?.Color.Hex;
+                    AltPanel.Style.FontColor = "#FF0000";
             }
             else
             {

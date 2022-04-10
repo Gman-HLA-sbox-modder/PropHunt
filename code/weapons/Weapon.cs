@@ -41,7 +41,7 @@ namespace PropHunt
                 EnableSelfCollisions = false
             };
 
-            PickupTrigger.PhysicsBody.EnableAutoSleeping = false;
+            PickupTrigger.PhysicsBody.AutoSleep = false;
 
             AmmoClip = ClipSize;
             AmmoReserve = MaxReserve;
@@ -69,7 +69,7 @@ namespace PropHunt
             TimeSinceReload = 0;
             IsReloading = true;
 
-            (Owner as AnimEntity)?.SetAnimBool("b_reload", true);
+            (Owner as AnimEntity)?.SetAnimParameter("b_reload", true);
 
             StartReloadEffects();
         }
@@ -120,7 +120,7 @@ namespace PropHunt
         [ClientRpc]
         public virtual void StartReloadEffects()
         {
-            ViewModelEntity?.SetAnimBool("reload", true);
+            ViewModelEntity?.SetAnimParameter("reload", true);
 
             // TODO - player third person model reload
         }
@@ -159,17 +159,17 @@ namespace PropHunt
         {
             if(Owner != null) return false;
 
-            if(user.Inventory is BaseInventory inventory)
-            {
-                return inventory.CanAdd(this);
-            }
+           // if(user.Inventory is BaseInventory inventory)
+           // {
+           //     return inventory.CanAdd(this);
+            //}
 
             return true;
         }
 
         public void Remove()
         {
-            PhysicsGroup?.Wake();
+            //PhysicsGroup?.Wake();
             Delete();
         }
 
@@ -185,7 +185,7 @@ namespace PropHunt
                 _ = new Sandbox.ScreenShake.Perlin();
             }
 
-            ViewModelEntity?.SetAnimBool("fire", true);
+            ViewModelEntity?.SetAnimParameter("fire", true);
             CrosshairPanel?.CreateEvent("fire");
         }
 
@@ -214,7 +214,7 @@ namespace PropHunt
                 //
                 using(Prediction.Off())
                 {
-                    var damageInfo = DamageInfo.FromBullet(tr.EndPos, forward * 100 * force, damage)
+                    var damageInfo = DamageInfo.FromBullet(tr.EndPosition, forward * 100 * force, damage)
                         .UsingTraceResult(tr)
                         .WithAttacker(Owner)
                         .WithWeapon(this);
@@ -229,7 +229,7 @@ namespace PropHunt
         /// </summary>
         public virtual void ShootBullet(float spread, float force, float damage, float bulletSize)
         {
-            ShootBullet(Owner.EyePos, Owner.EyeRot.Forward, spread, force, damage, bulletSize);
+            ShootBullet(Owner.EyeLocalPosition, Owner.EyeLocalRotation.Forward, spread, force, damage, bulletSize);
         }
 
         /// <summary>
@@ -237,8 +237,8 @@ namespace PropHunt
         /// </summary>
         public virtual void ShootBullets(int numBullets, float spread, float force, float damage, float bulletSize)
         {
-            var pos = Owner.EyePos;
-            var dir = Owner.EyeRot.Forward;
+            var pos = Owner.EyeLocalPosition;
+            var dir = Owner.EyeLocalRotation.Forward;
 
             for(int i = 0; i < numBullets; i++)
             {

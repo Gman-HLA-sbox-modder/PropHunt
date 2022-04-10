@@ -21,7 +21,7 @@ namespace PropHunt
             foreach(MapProp mapProp in PropHuntGame.MapProps)
             {
                 Prop prop = Library.Create<Entity>(mapProp.ClassName) as Prop;
-                prop.SetModel(mapProp.Model);
+               // prop.SetModel(mapProp.Model);
                 prop.Position = mapProp.Position;
                 prop.Rotation = mapProp.Rotation;
                 prop.Scale = mapProp.Scale;

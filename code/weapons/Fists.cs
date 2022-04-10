@@ -25,7 +25,7 @@ namespace PropHunt
                 OnMeleeMiss(leftHand);
             }
 
-            (Owner as AnimEntity)?.SetAnimBool("b_attack", true);
+            (Owner as AnimEntity).SetAnimParameter("b_attack", true);
         }
 
         public override void AttackPrimary()
@@ -44,18 +44,18 @@ namespace PropHunt
 
         public override void SimulateAnimator(PawnAnimator anim)
         {
-            anim.SetParam("holdtype", 5);
-            anim.SetParam("aimat_weight", 1.0f);
+            anim.SetAnimParameter("holdtype", 5);
+            anim.SetAnimParameter("aimat_weight", 1.0f);
         }
 
         private bool MeleeAttack()
         {
-            var forward = Owner.EyeRot.Forward;
+            var forward = Owner.EyeLocalRotation.Forward;
             forward = forward.Normal;
 
             bool hit = false;
 
-            foreach(var tr in TraceBullet(Owner.EyePos, Owner.EyePos + forward * 80, 20.0f))
+            foreach(var tr in TraceBullet(Owner.EyeLocalPosition, Owner.EyeLocalPosition + forward * 80, 20.0f))
             {
                 if(!tr.Entity.IsValid()) continue;
 
@@ -67,7 +67,7 @@ namespace PropHunt
 
                 using(Prediction.Off())
                 {
-                    var damageInfo = DamageInfo.FromBullet(tr.EndPos, forward * 100, 25)
+                    var damageInfo = DamageInfo.FromBullet(tr.EndPosition, forward * 100, 25)
                         .UsingTraceResult(tr)
                         .WithAttacker(Owner)
                         .WithWeapon(this);
@@ -89,8 +89,8 @@ namespace PropHunt
                 _ = new Sandbox.ScreenShake.Perlin();
             }
 
-            ViewModelEntity?.SetAnimBool("attack", true);
-            ViewModelEntity?.SetAnimFloat("holdtype_attack", leftHand ? 2 : 1);
+            ViewModelEntity?.SetAnimParameter("attack", true);
+            ViewModelEntity?.SetAnimParameter("holdtype_attack", leftHand ? 2 : 1);
         }
 
         [ClientRpc]
@@ -103,8 +103,8 @@ namespace PropHunt
                 _ = new Sandbox.ScreenShake.Perlin(1.0f, 1.0f, 3.0f);
             }
 
-            ViewModelEntity?.SetAnimBool("attack", true);
-            ViewModelEntity?.SetAnimFloat("holdtype_attack", leftHand ? 2 : 1);
+            ViewModelEntity?.SetAnimParameter("attack", true);
+            ViewModelEntity?.SetAnimParameter("holdtype_attack", leftHand ? 2 : 1);
         }
     }
 }

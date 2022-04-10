@@ -38,7 +38,7 @@ namespace PropHunt
             TimeSincePrimaryAttack = 0;
             TimeSinceSecondaryAttack = 0;
 
-            (Owner as AnimEntity)?.SetAnimBool("b_attack", true);
+            (Owner as AnimEntity)?.SetAnimParameter("b_attack", true);
 
             //
             // Tell the clients to play the shoot effects
@@ -65,13 +65,13 @@ namespace PropHunt
             if(Host.IsClient)
                 return;
 
-            Ray ray = new Ray(Owner.EyePos, Owner.EyeRot.Forward);
+            Ray ray = new Ray(Owner.EyeLocalPosition, Owner.EyeRotation.Forward);
             TraceResult tr = Trace.Ray(ray, 50).Ignore(Owner).WorldAndEntities().Run();
             new Grenade()
             {
-                Position = tr.EndPos,
-                Rotation = Owner.EyeRot,
-                Velocity = Owner.EyeRot.Forward * 1750,
+                Position = tr.EndPosition,
+                Rotation = Owner.EyeRotation,
+                Velocity = Owner.EyeRotation.Forward * 1750,
                 Owner = Owner
             };
         }
@@ -89,14 +89,14 @@ namespace PropHunt
                 new Sandbox.ScreenShake.Perlin(0.5f, 4.0f, 1.0f, 0.5f);
             }
 
-            ViewModelEntity?.SetAnimBool("fire", true);
+            ViewModelEntity?.SetAnimParameter("fire", true);
             CrosshairPanel?.CreateEvent("fire");
         }
 
         public override void SimulateAnimator(PawnAnimator anim)
         {
-            anim.SetParam("holdtype", 2); // TODO this is shit
-            anim.SetParam("aimat_weight", 1.0f);
+            anim.SetAnimParameter("holdtype", 2); // TODO this is shit
+            anim.SetAnimParameter("aimat_weight", 1.0f);
         }
     }
 }

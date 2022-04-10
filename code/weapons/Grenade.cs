@@ -24,55 +24,28 @@ namespace PropHunt
 
         private void Explode()
         {
-            ModelExplosionBehavior explosion = new ModelExplosionBehavior()
+            var srcPos = Position;
+            if(PhysicsBody.IsValid()) srcPos = PhysicsBody.MassCenter;
+
+            var explosionBehavior = Model.GetExplosionBehavior();
+
+            new ExplosionEntity 
             {
-                Sound = "sounds/common/explosions/explo_gas_can_01.vsnd",
-                Damage = 120f,
-                Radius = 200f,
-                Force = 100f
-            };
+                Position = srcPos,
+                Radius = explosionBehavior.Radius,
+                Damage = explosionBehavior.Damage,
+                ForceScale = explosionBehavior.Force,
+                ParticleOverride = explosionBehavior.Effect,
+                SoundOverride = explosionBehavior.Sound
+            }.Explode(this);
 
             Vector3 pos = PhysicsBody.MassCenter;
-            Sound.FromWorld(explosion.Sound, pos);
             Particles.Create("particles/explosion/barrel_explosion/explosion_flash.vpcf", pos);
             Particles.Create("particles/explosion/barrel_explosion/explosion_gib.vpcf", pos);
             Particles.Create("particles/explosion/barrel_explosion/explosion_gib2.vpcf", pos);
             Particles.Create("particles/explosion/barrel_explosion/explosion_gib_large.vpcf", pos);
 
-            var entities = Physics.GetEntitiesInSphere(pos, explosion.Radius);
-
-            foreach(Entity entity in entities)
-            {
-                if(entity is not ModelEntity ent || !ent.IsValid())
-                    continue;
-
-                if(ent.LifeState != LifeState.Alive)
-                    continue;
-
-                if(!ent.PhysicsBody.IsValid())
-                    continue;
-
-                if(ent.IsWorld)
-                    continue;
-
-                Vector3 target = ent.PhysicsBody.MassCenter;
-                float distance = Vector3.DistanceBetween(pos, target);
-                if(distance > explosion.Radius)
-                    continue;
-
-                TraceResult tr = Trace.Ray(pos, target).Ignore(this).WorldOnly().Run();
-                if(tr.Fraction < 1)
-                    continue;
-
-                float multiplier = 1 - Math.Clamp(distance / explosion.Radius, 0, 1);
-                float damage = explosion.Damage * multiplier;
-                float force = explosion.Force * multiplier * (float)Math.Pow(ent.PhysicsBody.Mass, 0.5f);
-                Vector3 direction = (target - pos).Normal;
-
-                DamageInfo damageInfo = DamageInfo.Explosion(pos, direction * force, damage).WithAttacker(Owner);
-                damageInfo.Weapon = this;
-                ent.TakeDamage(damageInfo);
-            }
+            
         }
     }
 }

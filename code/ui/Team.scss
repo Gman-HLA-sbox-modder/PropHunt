@@ -4,13 +4,14 @@ Team {
 	bottom: 119px;
 	width: 229px;
 	height: 64px;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba( #3472e6, 1 );
 	border-radius: 7px;
+	font-weight: 800;
 	justify-content: center;
 
 	.Text {
 		align-items: center;
-		font-family: Verdana;
+		font-family: Poppins;
 		font-size: 30px;
 		font-weight: 700;
 	}

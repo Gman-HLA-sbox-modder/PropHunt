@@ -3,16 +3,17 @@ Timer {
 	left: 50%;
 	top: 36px;
 	min-width: 100px;
+	font-weight: 800;
 	transform: translateX(-50%);
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba( #3472e6, 1 );
 	border-radius: 7px;
 
 	.Round {
 		padding: 6px 10px;
-		font-family: Verdana;
+		font-family: Poppins;
 		font-size: 16.5px;
 		font-weight: 700;
 	}
@@ -23,7 +24,7 @@ Timer {
 		padding-bottom: 5px;
 		flex-direction: column;
 		align-items: center;
-		font-family: Verdana;
+		font-family: Poppins;
 		font-size: 30px;
 		font-weight: 700;
 

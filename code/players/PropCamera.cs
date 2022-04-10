@@ -20,11 +20,11 @@ namespace PropHunt
             Position += Vector3.Up * Math.Max(pawn.CollisionBounds.Maxs.z * pawn.Scale * 0.75f, 8f);
             Rotation = Rotation.FromAxis(Vector3.Up, 4) * Input.Rotation;
 
-            targetPos = Pos + Rot.Backward * orbitDistance;
+            targetPos = Position + Rotation.Backward * orbitDistance;
 
             Position += Vector3.Up * 0f;
-            TraceResult tr = Trace.Ray(Pos, targetPos).Ignore(pawn).Radius(8).Run();
-            Position = tr.EndPos;
+            TraceResult tr = Trace.Ray(Position, targetPos).Ignore(pawn).Radius(8).Run();
+            Position = tr.EndPosition;
 
             FieldOfView = 70;
             Viewer = null;

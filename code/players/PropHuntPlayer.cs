@@ -33,7 +33,7 @@ namespace PropHunt
             {
                 Host.AssertServer();
                 LifeState = LifeState.Dead;
-                Camera = new SpectatorCamera();
+                CameraMode = new SpectatorCamera();
                 ResetInterpolation();
                 return;
             }
@@ -58,11 +58,11 @@ namespace PropHunt
 
             if(PropHuntGame.GetTeam(TeamIndex) is SeekerTeam)
             {
-                Camera = new SeekerCamera();
+                CameraMode = new SeekerCamera();
                 GiveWeapons();
             }
             else
-                Camera = new PropCamera();
+                CameraMode = new PropCamera();
 
             EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -94,7 +94,7 @@ namespace PropHunt
                 {
                     Vector3 startPos = Position;
                     startPos += Vector3.Up * (CollisionBounds.Maxs.z * Scale) * 0.75f;
-                    TraceResult tr = Trace.Ray(startPos, startPos + EyeRot.Forward * 100).UseHitboxes().Ignore(this).Run();
+                    TraceResult tr = Trace.Ray(startPos, startPos + EyeRotation.Forward * 100).UseHitboxes().Ignore(this).Run();
                     if(tr.Hit && tr.Body.IsValid() && tr.Entity is Prop prop && tr.Body.BodyType == PhysicsBodyType.Dynamic)
                     {
                         UseProp(prop);
@@ -174,7 +174,7 @@ namespace PropHunt
 
         private void UseProp(Prop prop)
         {
-            if(GetModel() == prop.GetModel())
+            if(GetModelName() == prop.GetModelName())
             {
                 if(Scale != prop.Scale)
                     Scale = prop.Scale;
@@ -185,7 +185,7 @@ namespace PropHunt
                 return;
             }
 
-            SetModel(prop.GetModel());
+            SetModel(prop.GetModelName());
             Scale = prop.Scale;
             RenderColor = prop.RenderColor;
 

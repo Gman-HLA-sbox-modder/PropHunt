@@ -4,12 +4,13 @@ Counter {
 	bottom: 27px;
 	width: 183px;
 	height: 81px;
+	font-weight: 800;
 	transform: translateX(-50%);
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba( #3472e6, 1 );
 	border-radius: 7px;
 
 	.CounterText {
-		font-family: Verdana;
+		font-family: Poppins;
 		font-size: 20px;
 		font-weight: 700;
 		margin: 5px 0 5px 10px;

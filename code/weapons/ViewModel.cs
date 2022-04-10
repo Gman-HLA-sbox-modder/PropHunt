@@ -35,7 +35,7 @@ namespace PropHunt
             Position = camSetup.Position;
             Rotation = camSetup.Rotation;
 
-            camSetup.ViewModel.FieldOfView = FieldOfView;
+            //camSetup.ViewModel.FieldOfView = FieldOfView;
 
             var playerVelocity = Local.Pawn.Velocity;
 

@@ -8,7 +8,7 @@ TeamSelection {
 
 	.Selection {
 		width: 45%;
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: rgba( #3472e6, 1 );
 		border-radius: 7px;
 		text-align: center;
 		flex-direction: column;
@@ -17,7 +17,8 @@ TeamSelection {
 		Label {
 			position: absolute;
 			width: 100%;
-			font-family: Verdana;
+			font-family: Poppins;
+			font-weight: 800;
 			font-size: 50px;
 		}
 
@@ -41,6 +42,7 @@ TeamSelection {
 				height: 396px;
 				max-width: 396px;
 				max-height: 396px;
+
 				.Blocked {
 					width: 100%;
 					height: 100%;
@@ -50,14 +52,16 @@ TeamSelection {
 		}
 
 		&.Seekers {
-			color: #FFF000;
+			color: white;
+
 			.Image {
 				background-image: url(/ui/seekers.png);
 			}
 		}
 
 		&.Props {
-			color: #00F0FF;
+			color: white;
+
 			.Image {
 				background-image: url(/ui/props.png);
 			}

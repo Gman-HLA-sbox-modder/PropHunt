@@ -204,9 +204,9 @@ namespace PropHunt
 
         private void GiveWeapons()
         {
-            Inventory.Add(new Fists(), true);
             Inventory.Add(new Shotgun(), true);
             Inventory.Add(new SMG(), true);
+            Inventory.Add(new Fists(), true);
         }
     }
 }

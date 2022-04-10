@@ -229,7 +229,7 @@ namespace PropHunt
         /// </summary>
         public virtual void ShootBullet(float spread, float force, float damage, float bulletSize)
         {
-            ShootBullet(Owner.EyeLocalPosition, Owner.EyeLocalRotation.Forward, spread, force, damage, bulletSize);
+            ShootBullet(Owner.EyePosition, Owner.EyeRotation.Forward, spread, force, damage, bulletSize);
         }
 
         /// <summary>
@@ -237,8 +237,8 @@ namespace PropHunt
         /// </summary>
         public virtual void ShootBullets(int numBullets, float spread, float force, float damage, float bulletSize)
         {
-            var pos = Owner.EyeLocalPosition;
-            var dir = Owner.EyeLocalRotation.Forward;
+            var pos = Owner.EyePosition;
+            var dir = Owner.EyeRotation.Forward;
 
             for(int i = 0; i < numBullets; i++)
             {

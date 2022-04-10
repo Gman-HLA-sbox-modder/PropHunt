@@ -5,7 +5,7 @@ namespace PropHunt
     [Library("weapon_fists", Title = "Fists", Spawnable = false)]
     partial class Fists : Weapon
     {
-        public override string ViewModelPath => "models/firstperson/temp_punch/temp_punch.vmdl";
+        public override string ViewModelPath => "models/first_person/first_person_arms.vmdl";
         public override float PrimaryRate => 2.0f;
         public override float SecondaryRate => 2.0f;
 
@@ -25,7 +25,7 @@ namespace PropHunt
                 OnMeleeMiss(leftHand);
             }
 
-            (Owner as AnimEntity).SetAnimParameter("b_attack", true);
+            (Owner as AnimEntity)?.SetAnimParameter("b_attack", true);
         }
 
         public override void AttackPrimary()
@@ -45,17 +45,41 @@ namespace PropHunt
         public override void SimulateAnimator(PawnAnimator anim)
         {
             anim.SetAnimParameter("holdtype", 5);
-            anim.SetAnimParameter("aimat_weight", 1.0f);
+            anim.SetAnimParameter("aim_body_weight", 1.0f);
+
+            if(Owner.IsValid())
+            {
+                ViewModelEntity?.SetAnimParameter("b_grounded", Owner.GroundEntity.IsValid());
+                ViewModelEntity?.SetAnimParameter("aim_pitch", Owner.EyeRotation.Pitch());
+            }
+        }
+
+        public override void CreateViewModel()
+        {
+            Host.AssertClient();
+
+            if(string.IsNullOrEmpty(ViewModelPath))
+                return;
+
+            ViewModelEntity = new ViewModel
+            {
+                Position = Position,
+                Owner = Owner,
+                EnableViewmodelRendering = true,
+            };
+
+            ViewModelEntity.SetModel(ViewModelPath);
+            ViewModelEntity.SetAnimGraph("models/first_person/first_person_arms_punching.vanmgrph");
         }
 
         private bool MeleeAttack()
         {
-            var forward = Owner.EyeLocalRotation.Forward;
+            var forward = Owner.EyeRotation.Forward;
             forward = forward.Normal;
 
             bool hit = false;
 
-            foreach(var tr in TraceBullet(Owner.EyeLocalPosition, Owner.EyeLocalPosition + forward * 80, 20.0f))
+            foreach(var tr in TraceBullet(Owner.EyePosition, Owner.EyePosition + forward * 80, 20.0f))
             {
                 if(!tr.Entity.IsValid()) continue;
 
@@ -84,11 +108,7 @@ namespace PropHunt
         {
             Host.AssertClient();
 
-            if(IsLocalPawn)
-            {
-                _ = new Sandbox.ScreenShake.Perlin();
-            }
-
+            ViewModelEntity?.SetAnimParameter("attack_has_hit", false);
             ViewModelEntity?.SetAnimParameter("attack", true);
             ViewModelEntity?.SetAnimParameter("holdtype_attack", leftHand ? 2 : 1);
         }
@@ -98,11 +118,7 @@ namespace PropHunt
         {
             Host.AssertClient();
 
-            if(IsLocalPawn)
-            {
-                _ = new Sandbox.ScreenShake.Perlin(1.0f, 1.0f, 3.0f);
-            }
-
+            ViewModelEntity?.SetAnimParameter("attack_has_hit", true);
             ViewModelEntity?.SetAnimParameter("attack", true);
             ViewModelEntity?.SetAnimParameter("holdtype_attack", leftHand ? 2 : 1);
         }

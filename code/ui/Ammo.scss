@@ -1,12 +1,13 @@
 Ammo {
 	position: absolute;
 	right: 0px;
+	transition: all 0.1s ease-out;
 	bottom: 0px;
 
 	Panel {
 		position: absolute;
-		background-color: rgba(0, 0, 0, 0.3);
 		border-radius: 7px;
+		background-color: rgba( #3472e6, 1 );
 	}
 
 	Label {
@@ -23,24 +24,25 @@ Ammo {
 	.AmmoText {
 		left: 17px;
 		bottom: 15px;
-		font-family: Verdana;
+		font-family: Poppins;
 		font-size: 16.5px;
-		font-weight: 700;
+		font-weight: 800;
 	}
 
 	.Counter {
 		left: 90px;
-		bottom: 5px;
-		font-family: HalfLife2;
+		bottom: -3px;
+		font-family: Poppins;
 		font-size: 61px;
+		font-weight: 800;
 	}
 
 	.Reserve {
 		left: 220px;
 		bottom: 8px;
-		font-family: HalfLife2;
+		font-family: Poppins;
 		font-size: 31px;
-		font-weight: 700;
+		font-weight: 400;
 	}
 
 	.Alt {

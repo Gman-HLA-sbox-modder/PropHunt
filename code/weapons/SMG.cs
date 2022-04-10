@@ -12,7 +12,6 @@ namespace PropHunt
         public override float ReloadTime => 5.0f;
         public override int ClipSize => 45;
         public override int MaxReserve => 225;
-        public override int MaxAlt => 3;
 
         public override void Spawn()
         {
@@ -54,26 +53,7 @@ namespace PropHunt
 
         public override void AttackSecondary()
         {
-            if(!UseAmmo(1, true))
-            {
-                PlaySound("rust_smg.dryfire");
-                return;
-            }
-
-            TimeSinceSecondaryAttack = 0;
-
-            if(Host.IsClient)
-                return;
-
-            Ray ray = new Ray(Owner.EyeLocalPosition, Owner.EyeRotation.Forward);
-            TraceResult tr = Trace.Ray(ray, 50).Ignore(Owner).WorldAndEntities().Run();
-            new Grenade()
-            {
-                Position = tr.EndPosition,
-                Rotation = Owner.EyeRotation,
-                Velocity = Owner.EyeRotation.Forward * 1750,
-                Owner = Owner
-            };
+            //try to make a new grenade at some point
         }
 
         [ClientRpc]

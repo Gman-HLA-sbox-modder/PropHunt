@@ -215,7 +215,7 @@ namespace PropHunt
                 {
                     MapProp mapProp = new MapProp();
                     mapProp.ClassName = prop.ClassInfo.Name;
-                    //mapProp.Model = prop.GetModelName();
+                    //mapProp.Model =  prop.GetModelName(); Dear Lord help please
                     mapProp.Position = prop.Position;
                     mapProp.Rotation = prop.Rotation;
                     mapProp.Scale = prop.Scale;

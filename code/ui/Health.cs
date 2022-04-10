@@ -29,11 +29,6 @@ namespace PropHunt
 
             RemoveClass("Hidden");
             HealthText.Text = player.Health.CeilToInt().ToString();
-
-            if(player.Health.CeilToInt() < 20)
-                Style.FontColor = "#ffffff";
-            else
-                Style.FontColor = "#ffffff";
         }
     }
 }

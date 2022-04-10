@@ -69,25 +69,13 @@ namespace PropHunt
             ReserveText.Text = weapon.AmmoReserve.ToString();
 
             float color = Math.Max(0, (1 - (Time.Now - startGlowBackground)) * 255);
-            AmmoPanel.Style.BackgroundColor = $"rgba({color:N0}, {color:N0}, 0, 0.3);";
-            AltPanel.Style.BackgroundColor = $"rgba({color:N0}, {color:N0}, 0, 0.3);";
             AmmoPanel.Style.Right = offset;
-
-            if(weapon.AmmoClip == 0)
-                AmmoPanel.Style.FontColor = "#FF0000";
-            else
-                AltPanel.Style.FontColor = "#FF0000";
 
             if(weapon.MaxAlt > 0)
             {
                 AltPanel.RemoveClass("Hidden");
                 AltText.Text = weapon.AmmoAlt.ToString();
                 desiredOffset = 202;
-
-                if(weapon.AmmoAlt == 0)
-                    AltPanel.Style.FontColor = "#FF0000";
-                else
-                    AltPanel.Style.FontColor = "#FF0000";
             }
             else
             {

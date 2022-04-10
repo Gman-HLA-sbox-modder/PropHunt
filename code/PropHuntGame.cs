@@ -209,20 +209,6 @@ namespace PropHunt
             if(IsClient)
                 return;
 
-            foreach(Entity entity in All)
-            {
-                if(entity is Prop prop && entity.ClassInfo?.Name == "prop_physics")
-                {
-                    MapProp mapProp = new MapProp();
-                    mapProp.ClassName = prop.ClassInfo.Name;
-                    //mapProp.Model =  prop.GetModelName(); Dear Lord help please
-                    mapProp.Position = prop.Position;
-                    mapProp.Rotation = prop.Rotation;
-                    mapProp.Scale = prop.Scale;
-                    mapProp.Color = prop.RenderColor;
-                    MapProps.Add(mapProp);
-                }
-            }
         }
 
         public override void Simulate(Client cl)

@@ -2,7 +2,7 @@
 
 namespace PropHunt
 {
-    public class MapProp
+    public class MapProp : Sandbox.Prop
     {
         public string ClassName;
         public Model Model;

@@ -192,7 +192,7 @@ namespace PropHunt
             Animator = new PropAnimator();
             Controller = new PropController();
             Clothing.ClearEntities();
-
+            SetupPhysicsFromModel(PhysicsMotionType.Static);
             EnableHitboxes = false;
 
             float multiplier = Math.Clamp(Health / MaxHealth, 0, 1);

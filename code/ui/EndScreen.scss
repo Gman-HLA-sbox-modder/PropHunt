@@ -8,13 +8,14 @@ EndScreen {
 
 	.Background {
 		padding: 12px;
-		background-color: rgba(0, 0, 0, 0.75);
+		background-color: rgba( #3472e6, 1 );
 		border-radius: 7px;
 		justify-content: center;
 
 		.Title {
-			font-family: Verdana;
+			font-family: Poppins;
 			font-size: 50px;
+			font-weight: 800;
 		}
 	}
 
@@ -23,10 +24,10 @@ EndScreen {
 	}
 
 	&.Seekers {
-		color: #FFF000;
+		color: white;
 	}
 
 	&.Props {
-		color: #00F0FF;
+		color: white;
 	}
 }

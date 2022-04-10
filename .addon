@@ -1,5 +1,5 @@
 {
-  "Title": "Ian\u0027s Prophunt",
+  "Title": "Prophunt",
   "Type": "game",
   "Org": "gman",
   "Ident": "prophunt",
@@ -13,6 +13,8 @@
   "Metadata": {
     "MapList": [
       "baks.office"
-    ]
+    ],
+    "MinPlayers": 1,
+    "MaxPlayers": 32
   }
 }

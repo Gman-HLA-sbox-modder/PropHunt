@@ -29,14 +29,7 @@ namespace PropHunt
 
         public override void Respawn()
 		{
-            if(PropHuntGame.Round == PropHuntGame.SeekingRound || PropHuntGame.Round == PropHuntGame.FinishedRound || TeamIndex == 0)
-            {
-                Host.AssertServer();
-                LifeState = LifeState.Dead;
-                CameraMode = new SpectatorCamera();
-                ResetInterpolation();
-                return;
-            }
+           
 
             Inventory.DeleteContents();
             SetModel("models/citizen/citizen.vmdl");
@@ -192,7 +185,7 @@ namespace PropHunt
             Animator = new PropAnimator();
             Controller = new PropController();
             Clothing.ClearEntities();
-            SetupPhysicsFromModel(PhysicsMotionType.Static);
+            SetupPhysicsFromAABB(PhysicsMotionType.Static, prop.CollisionBounds.Mins, prop.CollisionBounds.Maxs);
             EnableHitboxes = false;
 
             float multiplier = Math.Clamp(Health / MaxHealth, 0, 1);

@@ -29,7 +29,14 @@ namespace PropHunt
 
         public override void Respawn()
 		{
-           
+            if(PropHuntGame.Round == PropHuntGame.SeekingRound || PropHuntGame.Round == PropHuntGame.FinishedRound || TeamIndex == 0)
+            {
+                Host.AssertServer();
+                LifeState = LifeState.Dead;
+                CameraMode = new SpectatorCamera();
+                ResetInterpolation();
+                return;
+            }
 
             Inventory.DeleteContents();
             SetModel("models/citizen/citizen.vmdl");
@@ -70,6 +77,7 @@ namespace PropHunt
 		/// </summary>
 		public override void Simulate(Client cl)
 		{
+            ////something in here is causing respawning like 10 times
 			base.Simulate(cl);
 
 			//
@@ -78,8 +86,7 @@ namespace PropHunt
 			//
 			SimulateActiveChild(cl, ActiveChild);
 
-            if(IsServer && Position.z <= PropHuntGame.KillHeight)
-                TakeDamage(DamageInfo.Generic(1000));
+          
 
             if(PropHuntGame.GetTeam(TeamIndex) is PropTeam)
             {
